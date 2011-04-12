@@ -6,108 +6,69 @@ using Castle.DynamicProxy;
 using Castle.DynamicProxy.Generators;
 using System.Reflection;
 
-namespace Mug
+namespace MugMocks
 {
+    /// <summary>
+    /// Thrown when <see cref="Mug.On"/> is called on an object not created with <see cref="Mug.Mock"/>.
+    /// </summary>
     public class NotAMugObjectException : Exception
     {
-        public NotAMugObjectException(string msg) : base(msg) { }
+        internal NotAMugObjectException(string msg) : base(msg) { }
     }
+
+    /// <summary>
+    /// Thrown when a method on a mocked object is called without it having been registered with <see cref="Mug.On"/>.
+    /// </summary>
     public class MethodNotStubbedException : Exception
     {
-        public MethodNotStubbedException(string msg) : base(msg) { }
+        internal MethodNotStubbedException(string msg) : base(msg) { }
     }
 
-    public class Interceptor : IInterceptor
+    internal class Interceptor : IInterceptor
     {
-        public Dictionary<MethodInfo, Delegate> operations = new Dictionary<MethodInfo,Delegate>();
+        private Dictionary<string, Delegate> operations = new Dictionary<string, Delegate>();
+
+        /// <summary>
+        /// Register <paramref name="instead"/> to be executed when <paramref name="method"/> is called.
+        /// Uses MethodInfo.ToString(), which uniquely identifies any possible signature.
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="instead"></param>
+        public void RegisterOperation(MethodInfo method, Delegate instead)
+        {
+            operations[method.ToString()] = instead;
+        }
+
         public void Intercept(IInvocation invocation)
         {
-            foreach (var oper in operations)
+            // find registered operation, and invoke it if possible.
+            string methodSignature = invocation.Method.ToString();
+            if (operations.ContainsKey(methodSignature))
             {
-                if (oper.Key.Name == invocation.Method.Name)
-                {
-                    invocation.ReturnValue = oper.Value.DynamicInvoke(invocation.Arguments);
-                    return;
-                }
+                var oper = operations[methodSignature];
+                invocation.ReturnValue = oper.DynamicInvoke(invocation.Arguments);
             }
-            throw new MethodNotStubbedException(invocation.Method.Name + " was called but not registered with an On().Do() cycle (on an object of type " + invocation.TargetType + ")");
+            else
+            {
+                throw new MethodNotStubbedException(invocation.Method.Name + " was called but not registered with an On() call (on an object of type " + invocation.Method.DeclaringType.Name + ")");
+            }
         }
     }
 
-    public abstract class AbstractDelegateHook
-    {
-        protected MethodInfo method;
-        protected Interceptor interceptor;
-
-        internal AbstractDelegateHook(MethodInfo method, Interceptor interceptor)
-        {
-            this.method = method;
-            this.interceptor = interceptor;
-        }
-        protected void StoreDo(Delegate action)
-        {
-            interceptor.operations[method] = action;
-        }
-    }
-
-    public class ActionHook : AbstractDelegateHook
-    {
-        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Action action) { StoreDo(action); }
-    }
-    public class ActionHook<T1> : AbstractDelegateHook
-    {
-        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Action<T1> action) { StoreDo(action); }
-    }
-    public class ActionHook<T1, T2> : AbstractDelegateHook
-    {
-        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Action<T1, T2> action) { StoreDo(action); }
-    }
-    public class ActionHook<T1, T2, T3> : AbstractDelegateHook
-    {
-        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Action<T1, T2, T3> action) { StoreDo(action); }
-    }
-    public class ActionHook<T1, T2, T3, T4> : AbstractDelegateHook
-    {
-        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Action<T1, T2, T3, T4> action) { StoreDo(action); }
-    }
-
-
-    public class FuncHook<TRet> : AbstractDelegateHook
-    {
-        internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Func<TRet> action) { StoreDo(action); }
-    }
-    public class FuncHook<T1, TRet> : AbstractDelegateHook
-    {
-        internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Func<T1, TRet> action) { StoreDo(action); }
-    }
-    public class FuncHook<T1, T2, TRet> : AbstractDelegateHook
-    {
-        internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Func<T1, T2, TRet> action) { StoreDo(action); }
-    }
-    public class FuncHook<T1, T2, T3, TRet> : AbstractDelegateHook
-    {
-        internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Func<T1, T2, T3, TRet> action) { StoreDo(action); }
-    }
-    public class FuncHook<T1, T2, T3, T4, TRet> : AbstractDelegateHook
-    {
-        internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
-        public void Do(Func<T1, T2, T3, T4, TRet> action) { StoreDo(action); }
-    }
-
+    /// <summary>
+    /// The main Mug class. Contains static methods to create mock objects and to stub methods on them.
+    /// </summary>
     public static class Mug
     {
         //i genuinely hope this guarantees a map-by-object reference. too noob to tell!
         static Dictionary<object, Interceptor> ceptors = new Dictionary<object, Interceptor>();
 
+        /// <summary>
+        /// Create a new mock object of the type specified by <typeparamref name="TObj"/>. Call <see cref="Mug.On"/> for
+        /// defining what should happen when an operation is called on said object.
+        /// </summary>
+        /// <typeparam name="TObj"></typeparam>
+        /// <returns>A new mock object.</returns>
         public static TObj Mock<TObj>() where TObj : class
         {
             var gen = new ProxyGenerator();
@@ -128,58 +89,41 @@ namespace Mug
             return ceptors[target];
         }
 
-        public static ActionHook OnVoid(Action action)
+        private static void Stub(Delegate methodDelegate, Delegate instead)
         {
-            return new ActionHook(action.Method, GetInterceptor(action));
-        }
-        public static ActionHook<T1> OnVoid<T1>(Action<T1> action)
-        {
-            return new ActionHook<T1>(action.Method, GetInterceptor(action));
-        }
-        public static ActionHook<T1, T2> OnVoid<T1, T2>(Action<T1, T2> action)
-        {
-            return new ActionHook<T1, T2>(action.Method, GetInterceptor(action));
-        }
-        public static ActionHook<T1, T2, T3> OnVoid<T1, T2, T3>(Action<T1, T2, T3> action)
-        {
-            return new ActionHook<T1, T2, T3>(action.Method, GetInterceptor(action));
-        }
-        public static ActionHook<T1, T2, T3, T4> OnVoid<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action)
-        {
-            return new ActionHook<T1, T2, T3, T4>(action.Method, GetInterceptor(action));
+            GetInterceptor(methodDelegate).RegisterOperation(methodDelegate.Method, instead);
         }
 
-        public static FuncHook<TRet> On<TRet>(Func<TRet> action)
-        {
-            return new FuncHook<TRet>(action.Method, GetInterceptor(action));
-        }
-        public static FuncHook<T1, TRet> On<T1, TRet>(Func<T1, TRet> action)
-        {
-            return new FuncHook<T1, TRet>(action.Method, GetInterceptor(action));
-        }
-        public static FuncHook<T1, T2, TRet> On<T1, T2, TRet>(Func<T1, TRet> action)
-        {
-            return new FuncHook<T1, T2, TRet>(action.Method, GetInterceptor(action));
-        }
-        public static FuncHook<T1, T2, T3, TRet> On<T1, T2, T3, TRet>(Func<T1, TRet> action)
-        {
-            return new FuncHook<T1, T2, T3, TRet>(action.Method, GetInterceptor(action));
-        }
-        public static FuncHook<T1, T2, T3, T4, TRet> On<T1, T2, T3, T4, TRet>(Func<T1, TRet> action)
-        {
-            return new FuncHook<T1, T2, T3, T4, TRet>(action.Method, GetInterceptor(action));
-        }
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On(Action method, Action stub) { Stub(method, stub); }
 
-        public static void Stub<TRet>(Func<TRet> action, Func<TRet> instead)
-        {
-            var o = new FuncHook<TRet>(action.Method, GetInterceptor(action));
-            o.Do(instead);
-        }
-        public static void Stub<TRet, T1>(Func<TRet, T1> action, Func<TRet, T1> instead)
-        {
-            var o = new FuncHook<TRet, T1>(action.Method, GetInterceptor(action));
-            o.Do(instead);
-        }
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<T1>(Action<T1> method, Action<T1> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<T1, T2>(Action<T1, T2> method, Action<T1, T2> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<T1, T2, T3>(Action<T1, T2, T3> method, Action<T1, T2, T3> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<T1, T2, T3, T4>(Action<T1, T2, T3, T4> method, Action<T1, T2, T3, T4> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<TRet>(Func<TRet> method, Func<TRet> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<TRet, T1>(Func<TRet, T1> method, Func<TRet, T1> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<TRet, T1, T2>(Func<TRet, T1, T2> method, Func<TRet, T1, T2> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<TRet, T1, T2, T3>(Func<TRet, T1, T2, T3> method, Func<TRet, T1, T2, T3> stub) { Stub(method, stub); }
+
+        /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
+        public static void On<TRet, T1, T2, T3, T4>(Func<TRet, T1, T2, T3, T4> method, Func<TRet, T1, T2, T3, T4> stub) { Stub(method, stub); }
+
     }
 
 }

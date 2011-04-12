@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using MugMocks;
 
-namespace Mug
+namespace MugTest
 {
     public interface IAdder
     {
@@ -24,7 +25,7 @@ namespace Mug
         {
             this.adder = adder;
         }
-        List<int> CountToTen()
+        public List<int> CountToTen()
         {
             var list = new List<int>();
             int i = 0;
@@ -40,29 +41,38 @@ namespace Mug
     [TestFixture]
     class SubjectTest
     {
-        //[Test]
-        //public void moo()
-        //{
-        //    var mug = new Mug<IAdder>();
+        [Test]
+        public void CountToTenShouldCountToTen()
+        {
+            var adder = Mug.Mock<IAdder>();
+            var subject = new Subject(adder);
 
-        //    mug.On<int, int>(o => o.AddOne).Do(delegate(int i) { return i + 1; });
-        //    var op = mug.Object;
-        //    op.AddOne(5);
-        //}
+            var callCount = 0;
+            Mug.On(adder.AddOne, delegate(int i)
+            {
+                callCount++;
+                return i + 1;
+            });
+
+            var numbers = subject.CountToTen();
+
+            Assert.That(callCount, Is.EqualTo(10));
+            Assert.That(numbers[6], Is.EqualTo(6));
+        }
 
         [Test]
         public void moo2()
         {
             var obj = Mug.Mock<IAdder>();
 
-            Mug.On<int, int>(obj.AddOne).Do(delegate(int i) 
+            Mug.On(obj.AddOne, delegate(int i) 
             { 
                 return i + 2; 
             });
 
             Assert.That(obj.AddOne(5), Is.EqualTo(7));
 
-            Mug.On<int, int>(obj.AddOne).Do(delegate(int i)
+            Mug.On(obj.AddOne, delegate(int i)
             {
                 return i + 3;
             });
@@ -76,7 +86,7 @@ namespace Mug
             var obj = Mug.Mock<IChecker>();
 
             bool wasCalled = false;
-            Mug.OnVoid<int>(obj.CheckFive).Do(delegate(int i)
+            Mug.On(obj.CheckFive, delegate(int i)
             {
                 Assert.That(i, Is.EqualTo(5));
                 wasCalled = true;
@@ -94,7 +104,7 @@ namespace Mug
             var obj = Mug.Mock<IChecker>();
 
             bool wasCalled = false;
-            Mug.OnVoid(obj.PrintSomething).Do(delegate()
+            Mug.On(obj.PrintSomething, delegate()
             {
                 wasCalled = true;
             });
@@ -109,7 +119,7 @@ namespace Mug
         {
             var obj = Mug.Mock<IAdder>();
 
-            Mug.Stub(obj.AddOne, delegate(int i)
+            Mug.On(obj.AddOne, delegate(int i)
             {
                 return i + 1;
             });
@@ -124,6 +134,21 @@ namespace Mug
             obj.AddOne(5);
         }
 
+        [Test]
+        public void MethodNotStubbedExceptionShouldIncludeTypename()
+        {
+            try
+            {
+                var obj = Mug.Mock<IAdder>();
+                obj.AddOne(5);
+                Assert.Fail();
+            }
+            catch (MethodNotStubbedException e)
+            {
+                Assert.That(e.Message, Is.StringContaining(typeof(IAdder).Name));
+            }
+        }
+
         class DummyAdder : IAdder
         {
             public int AddOne(int i) { return i; }
@@ -134,7 +159,7 @@ namespace Mug
         {
             var obj = new DummyAdder();
 
-            Mug.On<int, int>(obj.AddOne).Do(delegate(int i)
+            Mug.On(obj.AddOne, delegate(int i)
             {
                 return i;
             });
