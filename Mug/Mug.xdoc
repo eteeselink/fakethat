@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <docs xml:space="preserve">
-  <doc for="Mug.On">
+  <doc name="Mug.On">
     <summary>
       Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
     </summary>
