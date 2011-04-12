@@ -11,6 +11,12 @@ namespace Mug
         int AddOne(int i);
     }
 
+    public interface IChecker
+    {
+        void CheckFive(int i);
+        void PrintSomething();
+    }
+
     class Subject
     {
         IAdder adder;
@@ -62,6 +68,53 @@ namespace Mug
             });
 
             Assert.That(obj.AddOne(5), Is.EqualTo(8));
+        }
+
+        [Test]
+        public void VoidMethodsWorkToo()
+        {
+            var obj = Mug.Mock<IChecker>();
+
+            bool wasCalled = false;
+            Mug.OnVoid<int>(obj.CheckFive).Do(delegate(int i)
+            {
+                Assert.That(i, Is.EqualTo(5));
+                wasCalled = true;
+            });
+
+            obj.CheckFive(5);
+
+            Assert.That(wasCalled);
+
+        }
+
+        [Test]
+        public void VoidVoidMethodsWorkToo()
+        {
+            var obj = Mug.Mock<IChecker>();
+
+            bool wasCalled = false;
+            Mug.OnVoid(obj.PrintSomething).Do(delegate()
+            {
+                wasCalled = true;
+            });
+
+            obj.PrintSomething();
+
+            Assert.That(wasCalled);
+        }
+
+        [Test]
+        public void SimpleSyntaxWorks()
+        {
+            var obj = Mug.Mock<IAdder>();
+
+            Mug.Stub(obj.AddOne, delegate(int i)
+            {
+                return i + 1;
+            });
+
+            Assert.That(obj.AddOne(5), Is.EqualTo(6));
         }
 
         [Test, ExpectedException(typeof(MethodNotStubbedException))]

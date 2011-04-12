@@ -34,11 +34,12 @@ namespace Mug
         }
     }
 
-    public abstract class AbstractFuncHook
+    public abstract class AbstractDelegateHook
     {
         protected MethodInfo method;
         protected Interceptor interceptor;
-        internal AbstractFuncHook(MethodInfo method, Interceptor interceptor)
+
+        internal AbstractDelegateHook(MethodInfo method, Interceptor interceptor)
         {
             this.method = method;
             this.interceptor = interceptor;
@@ -49,27 +50,54 @@ namespace Mug
         }
     }
 
-    public class FuncHook<TRet> : AbstractFuncHook
+    public class ActionHook : AbstractDelegateHook
+    {
+        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
+        public void Do(Action action) { StoreDo(action); }
+    }
+    public class ActionHook<T1> : AbstractDelegateHook
+    {
+        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
+        public void Do(Action<T1> action) { StoreDo(action); }
+    }
+    public class ActionHook<T1, T2> : AbstractDelegateHook
+    {
+        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
+        public void Do(Action<T1, T2> action) { StoreDo(action); }
+    }
+    public class ActionHook<T1, T2, T3> : AbstractDelegateHook
+    {
+        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
+        public void Do(Action<T1, T2, T3> action) { StoreDo(action); }
+    }
+    public class ActionHook<T1, T2, T3, T4> : AbstractDelegateHook
+    {
+        internal ActionHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
+        public void Do(Action<T1, T2, T3, T4> action) { StoreDo(action); }
+    }
+
+
+    public class FuncHook<TRet> : AbstractDelegateHook
     {
         internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
         public void Do(Func<TRet> action) { StoreDo(action); }
     }
-    public class FuncHook<T1, TRet> : AbstractFuncHook
+    public class FuncHook<T1, TRet> : AbstractDelegateHook
     {
         internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
         public void Do(Func<T1, TRet> action) { StoreDo(action); }
     }
-    public class FuncHook<T1, T2, TRet> : AbstractFuncHook
+    public class FuncHook<T1, T2, TRet> : AbstractDelegateHook
     {
         internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
         public void Do(Func<T1, T2, TRet> action) { StoreDo(action); }
     }
-    public class FuncHook<T1, T2, T3, TRet> : AbstractFuncHook
+    public class FuncHook<T1, T2, T3, TRet> : AbstractDelegateHook
     {
         internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
         public void Do(Func<T1, T2, T3, TRet> action) { StoreDo(action); }
     }
-    public class FuncHook<T1, T2, T3, T4, TRet> : AbstractFuncHook
+    public class FuncHook<T1, T2, T3, T4, TRet> : AbstractDelegateHook
     {
         internal FuncHook(MethodInfo method, Interceptor interceptor) : base(method, interceptor) { }
         public void Do(Func<T1, T2, T3, T4, TRet> action) { StoreDo(action); }
@@ -100,6 +128,27 @@ namespace Mug
             return ceptors[target];
         }
 
+        public static ActionHook OnVoid(Action action)
+        {
+            return new ActionHook(action.Method, GetInterceptor(action));
+        }
+        public static ActionHook<T1> OnVoid<T1>(Action<T1> action)
+        {
+            return new ActionHook<T1>(action.Method, GetInterceptor(action));
+        }
+        public static ActionHook<T1, T2> OnVoid<T1, T2>(Action<T1, T2> action)
+        {
+            return new ActionHook<T1, T2>(action.Method, GetInterceptor(action));
+        }
+        public static ActionHook<T1, T2, T3> OnVoid<T1, T2, T3>(Action<T1, T2, T3> action)
+        {
+            return new ActionHook<T1, T2, T3>(action.Method, GetInterceptor(action));
+        }
+        public static ActionHook<T1, T2, T3, T4> OnVoid<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action)
+        {
+            return new ActionHook<T1, T2, T3, T4>(action.Method, GetInterceptor(action));
+        }
+
         public static FuncHook<TRet> On<TRet>(Func<TRet> action)
         {
             return new FuncHook<TRet>(action.Method, GetInterceptor(action));
@@ -119,6 +168,17 @@ namespace Mug
         public static FuncHook<T1, T2, T3, T4, TRet> On<T1, T2, T3, T4, TRet>(Func<T1, TRet> action)
         {
             return new FuncHook<T1, T2, T3, T4, TRet>(action.Method, GetInterceptor(action));
+        }
+
+        public static void Stub<TRet>(Func<TRet> action, Func<TRet> instead)
+        {
+            var o = new FuncHook<TRet>(action.Method, GetInterceptor(action));
+            o.Do(instead);
+        }
+        public static void Stub<TRet, T1>(Func<TRet, T1> action, Func<TRet, T1> instead)
+        {
+            var o = new FuncHook<TRet, T1>(action.Method, GetInterceptor(action));
+            o.Do(instead);
         }
     }
 
