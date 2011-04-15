@@ -3,3 +3,4 @@
 *.suo
 Backup/*
 /TestResult.xml
+/Mug/Mug.csproj.user
