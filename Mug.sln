@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mug", "Mug\Mug.csproj", "{A03B372B-72E7-4463-9DA6-04FA8D6C7667}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MugTest", "MugTest\MugTest.csproj", "{29197F45-9200-4105-AD9F-CCC3048AB481}"

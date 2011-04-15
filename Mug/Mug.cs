@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Castle.DynamicProxy;
-using Castle.DynamicProxy.Generators;
 using System.Reflection;
 
 namespace MugMocks
 {
     /// <summary>
-    /// Thrown when <see cref="Mug.On"/> is called on an object not created with <see cref="Mug.Mock"/>.
+    /// Thrown when <see cref="Mug.Stub"/> is called on an object not created with <see cref="Mug.Mock"/>.
     /// </summary>
     public class NotAMugObjectException : Exception
     {
@@ -17,7 +14,7 @@ namespace MugMocks
     }
 
     /// <summary>
-    /// Thrown when a method on a mocked object is called without it having been registered with <see cref="Mug.On"/>.
+    /// Thrown when a method on a mocked object is called without it having been registered with <see cref="Mug.Stub"/>.
     /// </summary>
     public class MethodNotStubbedException : Exception
     {
@@ -56,20 +53,20 @@ namespace MugMocks
     }
 
     /// <summary>
-    /// The main Mug class. Contains static methods to create mock objects and to stub methods on them.
+    /// The main Mug class. Contains methods to create mock objects and to stub methods on them.
     /// </summary>
-    public static class Mug
+    public class Mug
     {
         //i genuinely hope this guarantees a map-by-object reference. too noob to tell!
-        static Dictionary<object, Interceptor> ceptors = new Dictionary<object, Interceptor>();
+        private Dictionary<object, Interceptor> ceptors = new Dictionary<object, Interceptor>();
 
         /// <summary>
-        /// Create a new mock object of the type specified by <typeparamref name="TObj"/>. Call <see cref="Mug.On"/> for
+        /// Create a new mock object of the type specified by <typeparamref name="TObj"/>. Call <see cref="Mug.Stub"/> for
         /// defining what should happen when an operation is called on said object.
         /// </summary>
         /// <typeparam name="TObj"></typeparam>
         /// <returns>A new mock object.</returns>
-        public static TObj Mock<TObj>() where TObj : class
+        public TObj Mock<TObj>() where TObj : class
         {
             var gen = new ProxyGenerator();
             var interceptor = new Interceptor();
@@ -79,7 +76,7 @@ namespace MugMocks
             return obj;
         }
 
-        private static Interceptor GetInterceptor(Delegate action)
+        private Interceptor GetInterceptor(Delegate action)
         {
             object target = action.Target;
             if (!ceptors.ContainsKey(target))
@@ -89,40 +86,40 @@ namespace MugMocks
             return ceptors[target];
         }
 
-        private static void Stub(Delegate methodDelegate, Delegate instead)
+        private void RegisterStub(Delegate methodDelegate, Delegate instead)
         {
             GetInterceptor(methodDelegate).RegisterOperation(methodDelegate.Method, instead);
         }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On(Action method, Action stub) { Stub(method, stub); }
+        public void Stub(Action method, Action stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<T1>(Action<T1> method, Action<T1> stub) { Stub(method, stub); }
+        public void Stub<T1>(Action<T1> method, Action<T1> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<T1, T2>(Action<T1, T2> method, Action<T1, T2> stub) { Stub(method, stub); }
+        public void Stub<T1, T2>(Action<T1, T2> method, Action<T1, T2> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<T1, T2, T3>(Action<T1, T2, T3> method, Action<T1, T2, T3> stub) { Stub(method, stub); }
+        public void Stub<T1, T2, T3>(Action<T1, T2, T3> method, Action<T1, T2, T3> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<T1, T2, T3, T4>(Action<T1, T2, T3, T4> method, Action<T1, T2, T3, T4> stub) { Stub(method, stub); }
+        public void Stub<T1, T2, T3, T4>(Action<T1, T2, T3, T4> method, Action<T1, T2, T3, T4> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<TRet>(Func<TRet> method, Func<TRet> stub) { Stub(method, stub); }
+        public void Stub<TRet>(Func<TRet> method, Func<TRet> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<TRet, T1>(Func<TRet, T1> method, Func<TRet, T1> stub) { Stub(method, stub); }
+        public void Stub<TRet, T1>(Func<TRet, T1> method, Func<TRet, T1> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<TRet, T1, T2>(Func<TRet, T1, T2> method, Func<TRet, T1, T2> stub) { Stub(method, stub); }
+        public void Stub<TRet, T1, T2>(Func<TRet, T1, T2> method, Func<TRet, T1, T2> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<TRet, T1, T2, T3>(Func<TRet, T1, T2, T3> method, Func<TRet, T1, T2, T3> stub) { Stub(method, stub); }
+        public void Stub<TRet, T1, T2, T3>(Func<TRet, T1, T2, T3> method, Func<TRet, T1, T2, T3> stub) { RegisterStub(method, stub); }
 
         /// <include file='Mug.xdoc' path='docs/doc[@name="Mug.On"]/*' />
-        public static void On<TRet, T1, T2, T3, T4>(Func<TRet, T1, T2, T3, T4> method, Func<TRet, T1, T2, T3, T4> stub) { Stub(method, stub); }
+        public void Stub<TRet, T1, T2, T3, T4>(Func<TRet, T1, T2, T3, T4> method, Func<TRet, T1, T2, T3, T4> stub) { RegisterStub(method, stub); }
 
     }
 

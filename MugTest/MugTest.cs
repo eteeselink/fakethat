@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using MugMocks;
@@ -41,14 +40,23 @@ namespace MugTest
     [TestFixture]
     class SubjectTest
     {
+        private Mug mug;
+
+        [SetUp]
+        public void SetUp()
+        {
+            mug = new Mug();
+        }
+
+
         [Test]
         public void CountToTenShouldCountToTen()
         {
-            var adder = Mug.Mock<IAdder>();
+            var adder = mug.Mock<IAdder>();
             var subject = new Subject(adder);
 
             var callCount = 0;
-            Mug.On(adder.AddOne, delegate(int i)
+            mug.Stub(adder.AddOne, delegate(int i)
             {
                 callCount++;
                 return i + 1;
@@ -63,16 +71,16 @@ namespace MugTest
         [Test]
         public void moo2()
         {
-            var obj = Mug.Mock<IAdder>();
+            var obj = mug.Mock<IAdder>();
 
-            Mug.On(obj.AddOne, delegate(int i) 
+            mug.Stub(obj.AddOne, delegate(int i) 
             { 
                 return i + 2; 
             });
 
             Assert.That(obj.AddOne(5), Is.EqualTo(7));
 
-            Mug.On(obj.AddOne, delegate(int i)
+            mug.Stub(obj.AddOne, delegate(int i)
             {
                 return i + 3;
             });
@@ -83,10 +91,10 @@ namespace MugTest
         [Test]
         public void VoidMethodsWorkToo()
         {
-            var obj = Mug.Mock<IChecker>();
+            var obj = mug.Mock<IChecker>();
 
             bool wasCalled = false;
-            Mug.On(obj.CheckFive, delegate(int i)
+            mug.Stub(obj.CheckFive, delegate(int i)
             {
                 Assert.That(i, Is.EqualTo(5));
                 wasCalled = true;
@@ -101,10 +109,10 @@ namespace MugTest
         [Test]
         public void VoidVoidMethodsWorkToo()
         {
-            var obj = Mug.Mock<IChecker>();
+            var obj = mug.Mock<IChecker>();
 
             bool wasCalled = false;
-            Mug.On(obj.PrintSomething, delegate()
+            mug.Stub(obj.PrintSomething, delegate()
             {
                 wasCalled = true;
             });
@@ -117,9 +125,9 @@ namespace MugTest
         [Test]
         public void SimpleSyntaxWorks()
         {
-            var obj = Mug.Mock<IAdder>();
+            var obj = mug.Mock<IAdder>();
 
-            Mug.On(obj.AddOne, delegate(int i)
+            mug.Stub(obj.AddOne, delegate(int i)
             {
                 return i + 1;
             });
@@ -130,7 +138,7 @@ namespace MugTest
         [Test, ExpectedException(typeof(MethodNotStubbedException))]
         public void MugShouldThrowOnExecutionOfUnstubbedMethods()
         {
-            var obj = Mug.Mock<IAdder>();
+            var obj = mug.Mock<IAdder>();
             obj.AddOne(5);
         }
 
@@ -139,7 +147,7 @@ namespace MugTest
         {
             try
             {
-                var obj = Mug.Mock<IAdder>();
+                var obj = mug.Mock<IAdder>();
                 obj.AddOne(5);
                 Assert.Fail();
             }
@@ -159,7 +167,7 @@ namespace MugTest
         {
             var obj = new DummyAdder();
 
-            Mug.On(obj.AddOne, delegate(int i)
+            mug.Stub(obj.AddOne, delegate(int i)
             {
                 return i;
             });
