@@ -21,7 +21,6 @@ Mug is a simplistic mocking library for .NET that allows you to stub methods on 
             // piGenerator Mock object.
             var circle = new Circle(piGenerator, 2.0);
 
-            // we manually keep track of whether piGenerator.GeneratePi was called
             bool wasCalled = false;
 
             // stub the Pi Generator with an in-place block of code
@@ -30,6 +29,10 @@ Mug is a simplistic mocking library for .NET that allows you to stub methods on 
                 // check validity of argument with standard NUnit assertions
                 Assert.That(precision, Is.InRange(2, 3));
 
+                // we manually keep track of whether piGenerator.GeneratePi 
+                // was called. Note that a similar trick can be used to
+                // count the amount of calls, or to behave different on later
+                // calls.
                 wasCalled = true;
 
                 // return a sufficiently good approximation of pi
@@ -47,7 +50,7 @@ Mug is a simplistic mocking library for .NET that allows you to stub methods on 
         }
     }
 
-That's it. Create a mock object, and stub its methods with in-place delegates.
+That's it. Create a mock object and stub its methods with in-place delegates.
 
 Features
 --------
@@ -85,7 +88,6 @@ Todo
 ----
 
  * Add support for mocking classes and not just interfaces
- * Make a nice downloadable assembly so that people don't have to clone the git repository and build Mug themselves
  * Figure out whether Mug works on .NET 2.0 and why not
  * Brag about Mug on the interwebs
  

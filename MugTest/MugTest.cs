@@ -218,7 +218,6 @@ namespace MugTest
             // piGenerator Mock object.
             var circle = new Circle(piGenerator, 2.0);
 
-            // we manually keep track of whether piGenerator.GeneratePi was called
             bool wasCalled = false;
 
             // stub the Pi Generator with an in-place block of code
@@ -227,6 +226,10 @@ namespace MugTest
                 // check validity of argument with standard NUnit assertions
                 Assert.That(precision, Is.InRange(2, 3));
 
+                // we manually keep track of whether piGenerator.GeneratePi 
+                // was called. Note that a similar trick can be used to
+                // count the amount of calls, or to behave different on later
+                // calls.
                 wasCalled = true;
 
                 // return a sufficiently good approximation of pi
