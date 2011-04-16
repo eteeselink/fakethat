@@ -63,6 +63,7 @@ Features
 
 Rationale
 ---------
+I wrote Mug because other C# mocking libraries made my upper back itch, and that's a very difficult place to scratch. Here's what makes Mug different:
 
 ### Delegates over fluent interfaces
 As you can see from the somewhat silly example above, Mug does not have any fancy "fluent object" syntax that allow you to check that a method has been called five times or that generate method logic for you. Mug also does not have an "Advanced Features" manual page that teach you how to use "amazing features that allow you to *make the return value depend on an argument!*". Making return values depend on arguments is exactly what they invented programming languages for, so let's use that!
@@ -90,8 +91,11 @@ Todo
  * Add support for mocking classes and not just interfaces
  * Add support for mocking properties and not just methods
  * Figure out whether Mug works on .NET 2.0 and why not
+ * Figure out whether Mug works on any other languages
  * Brag about Mug on the interwebs
  
+Help with any of the above is much appreciated!
+
 Credits
 -------
 
