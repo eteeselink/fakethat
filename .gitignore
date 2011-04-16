@@ -5,4 +5,5 @@ Backup/*
 /TestResult.xml
 /Mug/Mug.csproj.user
 /Mug.VisualState.xml
-/Releases/Mug-0.1.zip
+/Releases/*.zip
+/Lab

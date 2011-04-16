@@ -82,12 +82,13 @@ FAQ
  - Can I redefine stubbed methods halfway my test?
  - That delegate syntax makes me feel like it's 2005 all over. Can I use lambda expressions?
  - Can I use this in commercial environments?
- - What's a 3-letter affermative word that starts with a "y"?
+ - What's a 3-letter affirmative that starts with a "y"?
  
 Todo
 ----
 
  * Add support for mocking classes and not just interfaces
+ * Add support for mocking properties and not just methods
  * Figure out whether Mug works on .NET 2.0 and why not
  * Brag about Mug on the interwebs
  
