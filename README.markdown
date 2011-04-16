@@ -92,5 +92,5 @@ Credits
 
 Mug was written by Egbert Teeselink. It uses the excellent <a href="http://www.castleproject.org/dynamicproxy/index.html">Castle DynamicProxy</a> to do all the hard object-generating work.
 
-Mug is released under the MIT License.
+Mug is released under the <a href="http://creativecommons.org/licenses/MIT/">MIT License</a>.
 
