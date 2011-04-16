@@ -45,6 +45,7 @@ namespace MugTest
         [SetUp]
         public void SetUp()
         {
+            
             mug = new Mug();
         }
 
@@ -199,8 +200,8 @@ namespace MugTest
         }
     }
 
-    // Test for a Circle class that uses a PiGenerator instance to ensure that
-    // only fresh values used of Pi are used (just like with fruit).
+    // NUnit test for a Circle class that uses a PiGenerator instance to ensure that
+    // only fresh values used of pi are used (just like with fruit).
     [TestFixture]
     public class CircleTest
     {
@@ -210,16 +211,17 @@ namespace MugTest
             //create a new Mug object that holds mocked objects and methods
             var mug = new Mug();
 
-            // create a mock object along the IPiGenerator interface
+            // create a mock object for the IPiGenerator interface
             var piGenerator = mug.Mock<IPiGenerator>();
 
-            // we're testing a circle with radius 2.0
+            // we're testing a circle with radius 2.0, passing in the
+            // piGenerator Mock object.
             var circle = new Circle(piGenerator, 2.0);
 
-            // we manually keep track of whether our method was called
+            // we manually keep track of whether piGenerator.GeneratePi was called
             bool wasCalled = false;
 
-            // stub the Pi Generator to return a sufficiently good approximation of pi
+            // stub the Pi Generator with an in-place block of code
             mug.Stub(piGenerator.GeneratePi, delegate(int precision)
             {
                 // check validity of argument with standard NUnit assertions
@@ -227,9 +229,11 @@ namespace MugTest
 
                 wasCalled = true;
 
+                // return a sufficiently good approximation of pi
                 return 3.14;
             });
 
+            // invoke the Circumference property that we're testing
             double circumference = circle.Circumference;
 
             // use fancy NUnit features to check that result value is about 4*pi.

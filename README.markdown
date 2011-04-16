@@ -1,10 +1,10 @@
 Ridiculously simple mocking for .NET
 ====================================
 
-Mug is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates. This means that unlike with other mocking frameworks, you just write snippets of code that check whether the stubbed methods were called with the expected parameters and that return expected values. It's like writing a stub class, except right in the body of your test. For example:
+Mug is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates. This means that unlike with other mocking frameworks, you just write snippets of code in which you check whether the stubbed method has been called with the expected parameters and from which you return appropriate values. It's like writing a stub class, except right in the body of your test. For example:
 
     // NUnit test for a Circle class that uses a PiGenerator instance to ensure that
-    // only fresh values used of Pi are used (just like with fruit).
+    // only fresh values used of pi are used (just like with fruit).
     [TestFixture]
     public class CircleTest
     {
@@ -14,7 +14,7 @@ Mug is a simplistic mocking library for .NET that allows you to stub methods on 
             //create a new Mug object that holds mocked objects and methods
             var mug = new Mug();
 
-            // create a mock object along the IPiGenerator interface
+            // create a mock object for the IPiGenerator interface
             var piGenerator = mug.Mock<IPiGenerator>();
 
             // we're testing a circle with radius 2.0, passing in the
@@ -24,7 +24,7 @@ Mug is a simplistic mocking library for .NET that allows you to stub methods on 
             // we manually keep track of whether piGenerator.GeneratePi was called
             bool wasCalled = false;
 
-            // stub the Pi Generator to return a sufficiently good approximation of pi
+            // stub the Pi Generator with an in-place block of code
             mug.Stub(piGenerator.GeneratePi, delegate(int precision)
             {
                 // check validity of argument with standard NUnit assertions
@@ -32,10 +32,11 @@ Mug is a simplistic mocking library for .NET that allows you to stub methods on 
 
                 wasCalled = true;
 
+                // return a sufficiently good approximation of pi
                 return 3.14;
             });
 
-            // invoke the Circumference property
+            // invoke the Circumference property that we're testing
             double circumference = circle.Circumference;
 
             // use fancy NUnit features to check that result value is about 4*pi.
@@ -45,6 +46,8 @@ Mug is a simplistic mocking library for .NET that allows you to stub methods on 
             Assert.That(wasCalled);
         }
     }
+
+That's it. Create a mock object, and stub its methods with in-place delegates.
 
 Features
 --------
@@ -73,11 +76,10 @@ The above example demonstrates all of Mug's features; there are no more. I have 
 FAQ
 ---
 
- - Why is it called "Mug"?
  - Can I redefine stubbed methods halfway my test?
- - That delegate syntax makes me feel like it's 2005 all over. Can't I use lambda expressions?
+ - That delegate syntax makes me feel like it's 2005 all over. Can I use lambda expressions?
  - Can I use this in commercial environments?
- - What's a tropical fruit with 5 letters that starts with an "f"?
+ - What's a 3-letter affermative word that starts with a "y"?
  
 Todo
 ----

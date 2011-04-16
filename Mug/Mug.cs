@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace MugMocks
 {
+    
     /// <summary>
     /// Thrown when <see cref="Mug.Stub"/> is called on an object not created with <see cref="Mug.Mock"/>.
     /// </summary>
@@ -59,6 +60,24 @@ namespace MugMocks
     {
         //i genuinely hope this guarantees a map-by-object reference. too noob to tell!
         private Dictionary<object, Interceptor> ceptors = new Dictionary<object, Interceptor>();
+
+        static Mug()
+        {
+            // assembly loading hook for embedding Castle.Core.dll right into Mug.dll.
+            // stolen from http://blogs.msdn.com/b/microsoft_press/archive/2010/02/03/jeffrey-richter-excerpt-2-from-clr-via-c-third-edition.aspx
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                String resourceName = "Mug." +
+                   new AssemblyName(args.Name).Name + ".dll";
+
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                {
+                    Byte[] assemblyData = new Byte[stream.Length];
+                    stream.Read(assemblyData, 0, assemblyData.Length);
+                    return Assembly.Load(assemblyData);
+                }
+            };
+        }
 
         /// <summary>
         /// Create a new mock object of the type specified by <typeparamref name="TObj"/>. Call <see cref="Mug.Stub"/> for
