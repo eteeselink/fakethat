@@ -59,7 +59,7 @@ Rationale
 ---------
 
 ### Delegates over fluent interfaces
-As you can see from the somewhat silly example above, Mug does not have any fancy "fluent object" syntax that allow you to check that a method has been called five times or that generate method logic for you. Mug also does not have an "Advanced Features" manual page that teach you how to use "amazing features that allow you to *make the return value depend on an argument!*". I think that C# is much better suited for that than a fluent method interface.
+As you can see from the somewhat silly example above, Mug does not have any fancy "fluent object" syntax that allow you to check that a method has been called five times or that generate method logic for you. Mug also does not have an "Advanced Features" manual page that teach you how to use "amazing features that allow you to *make the return value depend on an argument!*". Making return values depend on arguments is exactly what they invented programming languages for, so let's use that!
 
 ### Fully type checked
 Nevertheless, mocking with Mug is fully type checked; you cannot stub methods that don't exist, or write stubs that accept or return the wrong values. If you change the signature of a method that is mocked somewhere and don't update the tests accordingly, the tests will fail to compile. This is important, because it means that you get direct feedback from your environment while writing *and* maintaining your code.
@@ -90,5 +90,5 @@ Todo
 Credits
 -------
 
-Mug was written by Egbert Teeselink. It uses the excellent <a href="http://www.castleproject.org/dynamicproxy/index.html">Castle DynamicProxy</a> to generate the real mock objects to do all the hard work.
+Mug was written by Egbert Teeselink. It uses the excellent <a href="http://www.castleproject.org/dynamicproxy/index.html">Castle DynamicProxy</a> to do all the hard object-generating work.
 
