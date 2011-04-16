@@ -91,10 +91,10 @@ Todo
  * Add support for mocking classes and not just interfaces
  * Add support for mocking properties and not just methods
  * Figure out whether Mug works on .NET 2.0 and why not
- * Figure out whether Mug works on any other languages
+ * Ditto for Silverlight and CLR languages other than C#
  * Brag about Mug on the interwebs
  
-Help with any of the above is much appreciated!
+Help with any of the above (or any other help you think I might need) is much appreciated! I promise that I'll rewrite this page in first person plural upon significant contributions. Imagine the glory!
 
 Credits
 -------
