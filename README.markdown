@@ -52,7 +52,8 @@ Features
   * Fully typechecked object mocking
   * Use assertions and matchers from your favourite unit testing framework inside the methods of your mock object
   * No reference manual; there are only two methods
-  * Comfortably stays outside the "Mocks vs Stubs" discussion by using both terms in its two-word API, probably incorrectly. But hey, it makes sense to me!
+  * Sure to work on .NET 3.5 and higher. Maybe also 2.0, but I haven't figured that out yet.
+  * Comfortably stays outside the "Mocks vs Stubs" discussion by using both terms in its two-word API, probably incorrectly.
 
 Rationale
 ---------
@@ -78,7 +79,16 @@ FAQ
  - Can I use this in commercial environments?
  - What's a tropical fruit with 5 letters that starts with an "f"?
  
+Todo
+----
+
+ * Add support for mocking classes and not just interfaces
+ * Make a nice downloadable assembly so that people don't have to clone the git repository and build Mug themselves
+ * Figure out whether Mug works on .NET 2.0 and why not
+ * Brag about Mug on the interwebs
+ 
 Credits
 -------
 
 Mug was written by Egbert Teeselink. It uses the excellent <a href="http://www.castleproject.org/dynamicproxy/index.html">Castle DynamicProxy</a> to generate the real mock objects to do all the hard work.
+
