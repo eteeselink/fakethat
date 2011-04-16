@@ -15,7 +15,7 @@ namespace MugTest
     {
         void CheckFive(int i);
         void PrintSomething();
-    }
+    } 
 
     class Subject
     {
@@ -171,6 +171,72 @@ namespace MugTest
             {
                 return i;
             });
+        }
+    }
+
+    public interface IPiGenerator
+    {
+        double GeneratePi(int precision);
+    }
+
+    public class Circle
+    {
+        private double radius;
+        private IPiGenerator piGen;
+
+        public Circle(IPiGenerator piGen, double radius)
+        {
+            this.piGen = piGen;
+            this.radius = radius;
+        }
+
+        public double Circumference
+        {
+            get
+            {
+                return 2 * piGen.GeneratePi(3) * radius;
+            }
+        }
+    }
+
+    // Test for a Circle class that uses a PiGenerator instance to ensure that
+    // only fresh values used of Pi are used (just like with fruit).
+    [TestFixture]
+    public class CircleTest
+    {
+        [Test]
+        public void TestCircumference()
+        {
+            //create a new Mug object that holds mocked objects and methods
+            var mug = new Mug();
+
+            // create a mock object along the IPiGenerator interface
+            var piGenerator = mug.Mock<IPiGenerator>();
+
+            // we're testing a circle with radius 2.0
+            var circle = new Circle(piGenerator, 2.0);
+
+            // we manually keep track of whether our method was called
+            bool wasCalled = false;
+
+            // stub the Pi Generator to return a sufficiently good approximation of pi
+            mug.Stub(piGenerator.GeneratePi, delegate(int precision)
+            {
+                // check validity of argument with standard NUnit assertions
+                Assert.That(precision, Is.InRange(2, 3));
+
+                wasCalled = true;
+
+                return 3.14;
+            });
+
+            double circumference = circle.Circumference;
+
+            // use fancy NUnit features to check that result value is about 4*pi.
+            Assert.That(circumference, Is.EqualTo(12.56).Within(.005));
+
+            // ensure that the Circle class really did use the PiGenerator
+            Assert.That(wasCalled);
         }
     }
 }
