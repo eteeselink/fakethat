@@ -58,13 +58,13 @@ Rationale
 ---------
 
 ### Delegates over fluent interfaces
-As you can see from the somewhat silly example above, Mug does not have any fancy "fluent object" syntax that allow you to check that a method has been called five times or that generate method logic for you. Mug also does not have an "Advanced Features" manual page that teach you how to use "amazing features that allow you to *make the return value depend on an argument!*". We think C# is much better suited for that than a fluent method interface.
+As you can see from the somewhat silly example above, Mug does not have any fancy "fluent object" syntax that allow you to check that a method has been called five times or that generate method logic for you. Mug also does not have an "Advanced Features" manual page that teach you how to use "amazing features that allow you to *make the return value depend on an argument!*". I think that C# is much better suited for that than a fluent method interface.
 
 ### Fully type checked
-Nevertheless, mocking Mug is fully type checked; you cannot stub methods that don't exist, or write stubs that accept or return the wrong values; if you change the signature of a mocked method and don't update the tests, the tests will fail to compile.
+Nevertheless, mocking with Mug is fully type checked; you cannot stub methods that don't exist, or write stubs that accept or return the wrong values. If you change the signature of a method that is mocked somewhere and don't update the tests accordingly, the tests will fail to compile. This is important, because it means that you get direct feedback from your environment while writing *and* maintaining your code.
 
 ### Readable test code over fancy expectation matching
-I think that there is no additional value in using a mocking framework to count how often a method was called or to make assertions on the values that were passed. Unit testing frameworks are already very good at that, so why would I want to learn the slightly-different syntax of yet another framework that can do the same, but now in mocked objects? With Mug, instead of `verifyingThatAllAssertionsHaveBeenMet`, you just assert in-place, you count the method calls yourself and afterwards assert that what you expected happened. This makes for readable tests that can be understood even by people entirely unfamiliar with Mug.
+I think that there is no additional value in using a mocking framework to count how often a method was called or to make assertions on the values that were passed. Unit testing frameworks are already very good at that, so why would I want to learn the slightly-different syntax of yet another framework that can do the same, but now in mocked objects? With Mug, instead of `verifyingThatAllExpectationsHaveBeenMet()`, you just assert in-place, you count the method calls yourself and afterwards assert that what you expected happened. This makes for readable tests that can be understood even by people entirely unfamiliar with Mug.
 
 ### Truly simple
 The above example demonstrates all of Mug's features; there are no more. I have not yet found a use for more.
@@ -74,5 +74,11 @@ FAQ
 
  - Why is it called "Mug"?
  - Can I redefine stubbed methods halfway my test?
+ - That delegate syntax makes me feel like it's 2005 all over. Can't I use lambda expressions?
  - Can I use this in commercial environments?
- - What's a tropical fruit with 5 letters, starts with an A?
+ - What's a tropical fruit with 5 letters that starts with an "f"?
+ 
+Credits
+-------
+
+Mug was written by Egbert Teeselink. It uses the excellent <a href="http://www.castleproject.org/dynamicproxy/index.html">Castle DynamicProxy</a> to generate the real mock objects to do all the hard work.
