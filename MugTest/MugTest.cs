@@ -71,7 +71,7 @@ namespace MugTest
 
         [Test]
         public void moo2()
-        {
+        {   
             var obj = mug.Mock<IAdder>();
 
             mug.Stub(obj.AddOne, delegate(int i) 
