@@ -3,8 +3,7 @@ Ridiculously simple mocking for .NET
 
 Mug is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates. This means that unlike with other mocking frameworks, you just write snippets of code in which you check whether the stubbed method has been called with the expected parameters and from which you return appropriate values. It's like writing a stub class, except right in the body of your test. For example:
 
-``` C#
-
+``` c#
 // NUnit test for a Circle class that uses a PiGenerator instance to ensure that
 // only fresh values used of pi are used (just like with fruit).
 [TestFixture]
@@ -51,7 +50,6 @@ public class CircleTest
         Assert.That(wasCalled);
     }
 }
-
 ```
 
 That's it. Create a mock object and stub its methods with in-place delegates.
