@@ -179,11 +179,26 @@ namespace MugTest
         }
 
         [Test]
-        public void AdHoc()
+        public void PropertySetAndGetShouldWork()
         {
             var obj = mug.Mock<IAdder>();
-            Console.WriteLine(obj.SomeProperty);
-            Console.WriteLine(mug.StubProperty(obj, o => o.SomeProperty, () => 5));
+
+            // getter
+            mug.StubProperty(() => obj.SomeProperty, () => 5);
+            int stubbedVal = obj.SomeProperty;
+            Assert.That(stubbedVal, Is.EqualTo(5));
+
+            // setter
+            int passedVal = 0;
+            mug.StubProperty(() => obj.SomeProperty, (i) => { passedVal = i; });
+            obj.SomeProperty = 7;
+            Assert.That(passedVal, Is.EqualTo(7));
+        }
+
+        [Test]
+        public void AdHoc()
+        {
+ 
         }
     }
 
