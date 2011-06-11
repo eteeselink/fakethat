@@ -9,15 +9,18 @@ namespace MugTest
     public interface IAdder
     {
         int AddOne(int i);
+
+        int SomeProperty { get; set;  }
     }
 
     public interface IChecker
     {
         void CheckFive(int i);
         void PrintSomething();
-    } 
+    }
 
-    class Subject
+    public 
+        class Subject
     {
         IAdder adder;
         public Subject(IAdder adder)
@@ -38,7 +41,7 @@ namespace MugTest
     }
 
     [TestFixture]
-    class SubjectTest
+    public class SubjectTest
     {
         private Mug mug;
 
@@ -161,6 +164,7 @@ namespace MugTest
         class DummyAdder : IAdder
         {
             public int AddOne(int i) { return i; }
+            public int SomeProperty { get; set; }
         }
 
         [Test, ExpectedException(typeof(NotAMugObjectException))]
@@ -172,6 +176,14 @@ namespace MugTest
             {
                 return i;
             });
+        }
+
+        [Test]
+        public void AdHoc()
+        {
+            var obj = mug.Mock<IAdder>();
+            Console.WriteLine(obj.SomeProperty);
+            Console.WriteLine(mug.StubProperty(obj, o => o.SomeProperty, () => 5));
         }
     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.ConsoleRunner;
 using System.Reflection;
+using MugMocks;
 
 namespace MugTest
 {
@@ -11,8 +12,9 @@ namespace MugTest
     {
         public static void Main(string[] args)
         {
-            Runner.Main(new string[] { Assembly.GetExecutingAssembly().Location });
+            Runner.Main(new string[] { Assembly.GetExecutingAssembly().Location, "/run:MugTest.SubjectTest.AdHoc" });
             
+            Console.ReadLine();
         }
     }
 }

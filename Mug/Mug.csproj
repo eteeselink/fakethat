@@ -74,6 +74,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="Interceptor.cs" />
     <Compile Include="Mug.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
