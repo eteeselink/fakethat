@@ -206,7 +206,7 @@ namespace MugTest
     public class CircleTest
     {
         [Test]
-        public void TestCircumference()
+        public void TestCircumference() 
         {
             //create a new Mug object that holds mocked objects and methods
             var mug = new Mug();
