@@ -8,7 +8,13 @@ namespace MugMocks
 {
     internal class Interceptor : Castle.DynamicProxy.IInterceptor
     {
-        private Dictionary<string, Delegate> operations = new Dictionary<string, Delegate>();
+        private class Operation
+        {
+            public Delegate Delegate;
+            public int Calls = 0;
+        }
+
+        private Dictionary<string, Operation> operations = new Dictionary<string, Operation>();
 
         /// <summary>
         /// Register <paramref name="instead"/> to be executed when <paramref name="method"/> is called.
@@ -18,7 +24,12 @@ namespace MugMocks
         /// <param name="instead"></param>
         public void RegisterOperation(MethodInfo method, Delegate instead)
         {
-            operations[method.ToString()] = instead;
+            operations[method.ToString()] = new Operation() { Delegate = instead };
+        }
+
+        public int CountCalls(MethodInfo method)
+        {
+            return operations[method.ToString()].Calls;
         }
 
         public void Intercept(Castle.DynamicProxy.IInvocation invocation)
@@ -27,8 +38,9 @@ namespace MugMocks
             string methodSignature = invocation.Method.ToString();
             if (operations.ContainsKey(methodSignature))
             {
-                var oper = operations[methodSignature];
-                invocation.ReturnValue = oper.DynamicInvoke(invocation.Arguments);
+                var operation = operations[methodSignature];
+                invocation.ReturnValue = operation.Delegate.DynamicInvoke(invocation.Arguments);
+                operation.Calls++;
             }
             else
             {

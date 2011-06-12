@@ -198,7 +198,23 @@ namespace MugTest
         [Test]
         public void AdHoc()
         {
- 
+            var obj = mug.Mock<IAdder>();
+
+            mug.Stub(obj.AddOne, (int i) =>
+            {
+                return i + 1;
+            });
+            obj.AddOne(5);
+
+            //FIXME: mooiere syntax mogelijk?
+            int calls = mug.CountCalls<int, int>(obj.AddOne);
+            Assert.That(calls, Is.EqualTo(1));
+
+            obj.AddOne(6);
+
+            calls = mug.CountCalls<int, int>(obj.AddOne);
+            Assert.That(calls, Is.EqualTo(2));
+
         }
     }
 

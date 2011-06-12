@@ -105,19 +105,24 @@ namespace MugMocks
         /// <returns>the value of [object]</returns>
         private object getTargetFromPropertyInvocation(MemberExpression expression)
         {
-            // stolen from http://stackoverflow.com/questions/2616638/access-the-value-of-a-member-expression:
+            
 
             // get the "[closure object].o" part
             var me = (MemberExpression)expression.Expression;
 
-            // get the "[closure object]" part
-            var ce = (ConstantExpression)me.Expression;
+            var comp = Expression.Lambda(me).Compile();
+            return comp.DynamicInvoke();
 
-            // get the field in "[closure object]" named "o"
-            var fieldInfo = ce.Value.GetType().GetField(me.Member.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            // non-Compile() way stolen from http://stackoverflow.com/questions/2616638/access-the-value-of-a-member-expression:
 
-            // get the field's value, i.e. the object itself.
-            return (object)fieldInfo.GetValue(ce.Value);
+            //// get the "[closure object]" part
+            //var ce = (ConstantExpression)me.Expression;
+
+            //// get the field in "[closure object]" named "o"
+            //var fieldInfo = ce.Value.GetType().GetField(me.Member.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            //// get the field's value, i.e. the object itself.
+            //return (object)fieldInfo.GetValue(ce.Value);
         }
 
         private void StubProperty<TProp>(Expression<Func<TProp>> propertyLookupExpression, Delegate resultFunc, bool isGetter)
@@ -141,6 +146,9 @@ namespace MugMocks
         /// <summary>
         /// Stub a property getter
         /// </summary>
+        /// <example>
+        /// mug.StubProperty(() => mockedObject.SomeProperty, () => 5);
+        /// </example>
         public void StubProperty<TProp>(Expression<Func<TProp>> propertyLookupExpression, Func<TProp> resultFunc)
         {
             StubProperty(propertyLookupExpression, resultFunc, true);
@@ -149,10 +157,19 @@ namespace MugMocks
         /// <summary>
         /// Stub a property setter
         /// </summary>
+        /// <example>
+        /// mug.StubProperty(() => mockedObject.SomeProperty, (i) => { Console.WriteLine(i); });
+        /// </example>
         public void StubProperty<TProp>(Expression<Func<TProp>> propertyLookupExpression, Action<TProp> resultFunc)
         {
             StubProperty(propertyLookupExpression, resultFunc, false);
         }
+
+        public int CountCalls<TRet, T1>(Func<TRet, T1> methodDelegate)
+        {
+            return GetInterceptor(methodDelegate.Target).CountCalls(methodDelegate.Method);
+        }
+
 
     }
 
