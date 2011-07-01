@@ -165,10 +165,52 @@ namespace MugMocks
             StubProperty(propertyLookupExpression, resultFunc, false);
         }
 
-        public int CountCalls<TRet, T1>(Func<TRet, T1> methodDelegate)
+        //public int CountCalls<TRet, T1>(Func<TRet, T1> methodDelegate)
+        //{
+        //    return GetInterceptor(methodDelegate.Target).CountCalls(methodDelegate.Method);
+        //}
+
+        private int CountCallsLambda(LambdaExpression lookupExpression)
         {
-            return GetInterceptor(methodDelegate.Target).CountCalls(methodDelegate.Method);
+            if (lookupExpression.Body.NodeType != ExpressionType.Call)
+            {
+                throw new Exception(@"Expected an expression of the form ""(int i, ...) => muggedObj.StubbedMethod(i, ...)"".");
+            }
+
+            // get the "[closure object].o.[some method]" part (i.e. drop the "int i =>")
+            var expression = (MethodCallExpression)lookupExpression.Body;
+
+            // get the "[closure object].o" part
+            var me = (MemberExpression)expression.Object;
+
+            var comp = Expression.Lambda(me).Compile();
+            var target = comp.DynamicInvoke();
+
+            // get the reflection method for the actual getter, e.g. target.get_SomeProperty or target.set_SomeProperty
+            var method = target.GetType().GetMethod(expression.Method.Name);
+            return GetInterceptor(target).CountCalls(method);
         }
+
+        public int CountCalls(Expression<Action> lookupExpression)
+        {
+            return CountCallsLambda(lookupExpression);
+        }
+
+        public int CountCalls<T1>(Expression<Action<T1>> lookupExpression)
+        {
+            return CountCallsLambda(lookupExpression);
+        }
+
+        public int CountCalls<TRet>(Expression<Func<TRet>> lookupExpression)
+        {
+            return CountCallsLambda(lookupExpression);
+        }
+
+        public int CountCalls<TRet, T1>(Expression<Func<TRet, T1>> lookupExpression)
+        {
+            return CountCallsLambda(lookupExpression);
+        }
+
 
 
     }

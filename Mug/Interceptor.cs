@@ -29,6 +29,11 @@ namespace MugMocks
 
         public int CountCalls(MethodInfo method)
         {
+            string methodSignature = method.ToString();
+            if (!operations.ContainsKey(methodSignature))
+            {
+                throw new MethodNotStubbedException("CountCalls invoked on " + method.ToString() + " but it was not registered with a Stub() call (on an object of type " + method.DeclaringType.Name + ")");
+            }
             return operations[method.ToString()].Calls;
         }
 
@@ -36,16 +41,21 @@ namespace MugMocks
         {
             // find registered operation, and invoke it if possible.
             string methodSignature = invocation.Method.ToString();
-            if (operations.ContainsKey(methodSignature))
-            {
-                var operation = operations[methodSignature];
-                invocation.ReturnValue = operation.Delegate.DynamicInvoke(invocation.Arguments);
-                operation.Calls++;
-            }
-            else
+            if (!operations.ContainsKey(methodSignature))
             {
                 throw new MethodNotStubbedException(invocation.Method.Name + " was called but not registered with a Stub() call (on an object of type " + invocation.Method.DeclaringType.Name + ")");
             }
+
+            var operation = operations[methodSignature];
+            try
+            {
+                invocation.ReturnValue = operation.Delegate.DynamicInvoke(invocation.Arguments);
+            }
+            catch (System.Reflection.TargetInvocationException e)
+            {
+                throw e.InnerException;
+            }
+            operation.Calls++;
         }
     }
 }

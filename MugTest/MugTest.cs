@@ -196,7 +196,15 @@ namespace MugTest
         }
 
         [Test]
-        public void AdHoc()
+        [ExpectedException(typeof(MethodNotStubbedException))]
+        public void NotStubbedMethodCannotHaveCallsCounted()
+        {
+            var chk = mug.Mock<IChecker>();
+            mug.CountCalls(() => chk.PrintSomething());
+        }
+
+        [Test]
+        public void CountCallsShouldWork()
         {
             var obj = mug.Mock<IAdder>();
 
@@ -206,15 +214,40 @@ namespace MugTest
             });
             obj.AddOne(5);
 
-            //FIXME: mooiere syntax mogelijk?
-            int calls = mug.CountCalls<int, int>(obj.AddOne);
+            int calls = mug.CountCalls((int i) => obj.AddOne(i));
             Assert.That(calls, Is.EqualTo(1));
 
             obj.AddOne(6);
 
-            calls = mug.CountCalls<int, int>(obj.AddOne);
+            calls = mug.CountCalls((int i) => obj.AddOne(i));
             Assert.That(calls, Is.EqualTo(2));
 
+            var chk = mug.Mock<IChecker>();
+            mug.Stub(chk.PrintSomething, () => { });
+            calls = mug.CountCalls(() => chk.PrintSomething());
+            Assert.That(calls, Is.EqualTo(0));
+
+            mug.Stub(chk.CheckFive, (int i) => { });
+            calls = mug.CountCalls((int i) => chk.CheckFive(i));
+            Assert.That(calls, Is.EqualTo(0));
+
+        }
+
+        [Test]
+        public void AdHoc()
+        {
+            var obj = mug.Mock<IAdder>();
+            mug.Stub(obj.AddOne, (int i) =>
+            {
+                Assert.That(i, Is.LessThan(3));
+                return 5;
+            });
+            try
+            {
+                obj.AddOne(6);
+            }
+            catch (Exception)
+            { }
         }
     }
 
