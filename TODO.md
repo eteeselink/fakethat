@@ -18,7 +18,7 @@ Todo
     addOneStub.CallCount.ShouldBe(5);
     
     // Filters on call data
-    addOneStub.Calls.Where(calls.First < 6).Count().ShouldBe(7);
+    addOneStub.Calls.Where(c => c.First < 6).Count().ShouldBe(7);
     
     
     

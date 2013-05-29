@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using MugMocks;
 using System.Linq;
+using Shouldly;
 
 namespace MugTest
 {
@@ -358,6 +359,18 @@ namespace MugTest
 
             // ensure that the Circle class really did use the PiGenerator
             Assert.That(wasCalled);
+        }
+    }
+
+
+    public static class Nlosdjgiowetu
+    {
+        public static void Quiogwdfuiin()
+        {
+            var stub = new StubbedFunc<int, string, int>();
+
+            // dit is hippe syntax.
+            stub.Calls.Where(call => call.Arg2 < 6).ShouldNotContain(q => q.Arg1 == "moo");
         }
     }
 }
