@@ -8,6 +8,8 @@ namespace MugMocks
 {
     internal class Interceptor : Castle.DynamicProxy.IInterceptor
     {
+        private readonly SetterRegistry setterRegistry;
+
         private class Operation
         {
             public Delegate Delegate;
@@ -15,6 +17,11 @@ namespace MugMocks
         }
 
         private Dictionary<string, Operation> operations = new Dictionary<string, Operation>();
+
+        public Interceptor(SetterRegistry registry)
+        {
+            this.setterRegistry = registry;
+        }
 
         /// <summary>
         /// Register <paramref name="instead"/> to be executed when <paramref name="method"/> is called.
@@ -43,7 +50,17 @@ namespace MugMocks
             string methodSignature = invocation.Method.ToString();
             if (!operations.ContainsKey(methodSignature))
             {
-                throw new MethodNotStubbedException(invocation.Method.Name + " was called but not registered with a Stub() call (on an object of type " + invocation.Method.DeclaringType.Name + ")");
+                // the setterRegistry only has a 'latest setter' if a setter has been recently (implicitly) converted
+                // to the property type, typically on a call that invoked this particular `Intercept` call. In that case,
+                // we want to newly tie the given setter to this invocation
+                if (methodSignature.StartsWith("Void set_") && setterRegistry.HasLatestSetter())
+                {
+                    RegisterOperation(invocation.Method, setterRegistry.UseLatestSetter());
+                }
+                else
+                {
+                    throw new MethodNotStubbedException(invocation.Method.Name + " was called but not registered with a Stub() call (on an object of type " + invocation.Method.DeclaringType.Name + ")");
+                }
             }
 
             var operation = operations[methodSignature];

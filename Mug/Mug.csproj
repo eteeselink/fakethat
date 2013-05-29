@@ -8,7 +8,7 @@
     <ProjectGuid>{A03B372B-72E7-4463-9DA6-04FA8D6C7667}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mug</RootNamespace>
+    <RootNamespace>MugMocks</RootNamespace>
     <AssemblyName>Mug</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -52,7 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Mug.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Mug.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=2.5.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
@@ -76,13 +76,19 @@
   <ItemGroup>
     <Compile Include="Exceptions.cs" />
     <Compile Include="Interceptor.cs" />
+    <Compile Include="LatestSetter.cs" />
     <Compile Include="Mug.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setter.cs" />
+    <Compile Include="StubbedMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
       <Link>README.md</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\TODO.md">
+      <Link>TODO.md</Link>
     </None>
     <None Include="Mug.xdoc" />
   </ItemGroup>

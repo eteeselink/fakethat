@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using MugMocks;
+using System.Linq;
 
 namespace MugTest
 {
@@ -19,8 +20,7 @@ namespace MugTest
         void PrintSomething();
     }
 
-    public 
-        class Subject
+    public class Subject
     {
         IAdder adder;
         public Subject(IAdder adder)
@@ -60,7 +60,7 @@ namespace MugTest
             var subject = new Subject(adder);
 
             var callCount = 0;
-            mug.Stub(adder.AddOne, delegate(int i)
+            mug.Stub(adder.AddOne, (int i) =>
             {
                 callCount++;
                 return i + 1;
@@ -192,6 +192,44 @@ namespace MugTest
             int passedVal = 0;
             mug.StubProperty(() => obj.SomeProperty, (i) => { passedVal = i; });
             obj.SomeProperty = 7;
+            Assert.That(passedVal, Is.EqualTo(7));
+        }
+
+        public interface INoGetter
+        {
+            int Prop1 { set; }
+            int Prop2 { set; }
+        }
+
+        [Test]
+        public void CanStubPropertyWithoutGetter()
+        {
+            var obj = mug.Mock<INoGetter>();
+
+            int passedVal = 0;
+            obj.Prop1 = mug.StubSetter<int>(i => { passedVal = i; });
+            
+            obj.Prop1 = 7;
+            Assert.That(passedVal, Is.EqualTo(7));
+        }
+
+        /// <summary>
+        /// Tests the odd, but not entirely unexpected scenario, of a user that creates a new
+        /// setter stub but only assigns it to a property later.
+        /// </summary>
+        [Test]
+        public void CanCreateStubbedSettersAndAssignThemLater()
+        {
+            var obj = mug.Mock<INoGetter>();
+            
+            int passedVal = 0;
+            var setter1 = mug.StubSetter<int>(i => { passedVal = i; });
+            var setter2 = mug.StubSetter<int>(i => { passedVal = i + 10; });
+
+            obj.Prop1 = setter1;
+            obj.Prop2 = setter2;
+
+            obj.Prop1 = 7;
             Assert.That(passedVal, Is.EqualTo(7));
         }
 

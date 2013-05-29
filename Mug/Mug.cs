@@ -15,13 +15,15 @@ namespace MugMocks
         //i genuinely hope this guarantees a map-by-object reference. too noob to tell!
         private Dictionary<object, Interceptor> ceptors = new Dictionary<object, Interceptor>();
 
+        private readonly SetterRegistry setterRegistry = new SetterRegistry();
+
         static Mug()
         {
             // assembly loading hook for embedding Castle.Core.dll right into Mug.dll.
             // stolen from http://blogs.msdn.com/b/microsoft_press/archive/2010/02/03/jeffrey-richter-excerpt-2-from-clr-via-c-third-edition.aspx
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
-                String resourceName = "Mug." +
+                String resourceName = typeof(Mug).Namespace + "." +
                    new AssemblyName(args.Name).Name + ".dll";
 
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
@@ -42,7 +44,7 @@ namespace MugMocks
         public TObj Mock<TObj>() where TObj : class
         {
             var gen = new Castle.DynamicProxy.ProxyGenerator();
-            var interceptor = new Interceptor();
+            var interceptor = new Interceptor(setterRegistry);
 
             TObj obj = gen.CreateInterfaceProxyWithoutTarget<TObj>(interceptor);
             ceptors[obj] = interceptor;
@@ -155,7 +157,8 @@ namespace MugMocks
         }
 
         /// <summary>
-        /// Stub a property setter
+        /// Stub a property setter. This syntax only works if the property also happens to have an accessible setter.
+        /// Use <see cref="StubSetter"/> if you need to stub a set-only property
         /// </summary>
         /// <example>
         /// mug.StubProperty(() => mockedObject.SomeProperty, (i) => { Console.WriteLine(i); });
@@ -163,6 +166,22 @@ namespace MugMocks
         public void StubProperty<TProp>(Expression<Func<TProp>> propertyLookupExpression, Action<TProp> resultFunc)
         {
             StubProperty(propertyLookupExpression, resultFunc, false);
+        }
+
+
+        /// <summary>
+        /// Creates a setter stub
+        /// Assign the resulting value to the property that you want to stub. 
+        /// In other words, write code that looks like <code>obj.SomeProperty = mug.StubSetter&lt;int&gt;(i => Console.WriteLine(i));</code>
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// obj.SomeProperty = mug.StubSetter&lt;int%gt;(i => Console.WriteLine(i));
+        /// </code>
+        /// </example>
+        public Setter<TProp> StubSetter<TProp>(Action<TProp> resultFunc)
+        {
+            return new Setter<TProp>(setterRegistry, resultFunc);
         }
 
         //public int CountCalls<TRet, T1>(Func<TRet, T1> methodDelegate)
