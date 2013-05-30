@@ -1,0 +1,45 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace FakeThat
+{
+<# foreach(var overload in overloads) { #>
+    public class Stubbed<#=overload.ClassName#><#=overload.TypeParamList#> : StubbedOperationBase<Stubbed<#=overload.ClassName#><#=overload.TypeParamList#>.Call>
+    {
+        public struct Call
+        {
+<# foreach(var field in overload.Fields) { #>
+            public readonly <#=field.AsField#>;
+<# } #>
+<# if(overload.Fields.Any()) { #>
+            internal Call(<#= String.Join(", ", overload.Fields.Select(f => f.AsParameter)) #>)
+            {
+<# foreach(var field in overload.Fields) { #>
+				<#=field.Name#> = <#=field.Name.ToLower()#>;
+<# } #>
+            }
+<# } #>
+        }
+
+        internal override void RememberCall(object[] arguments)
+        {
+            if (arguments.Length != <#=overload.Fields.Length#>)
+            {
+                throw new ArgumentException("Internal FakeThat error: expected exactly <#=overload.Fields.Length#> arguments");
+            }
+
+            var call = new Call(<#= String.Join(", ", overload.Fields.Select(f => String.Format("({0})arguments[{1}]", f.TypeName, f.Index - (overload.IsFunc ? 0 : 1)))) #>);
+            calls.Add(call);
+        } 
+    }
+<# } #>
+}
+
+<#@ include file="Overload.ttinclude" #>

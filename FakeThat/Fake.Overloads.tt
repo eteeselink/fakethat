@@ -1,0 +1,28 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace FakeThat
+{
+    public partial class Fake<TObj> : Fake 
+        where TObj : class
+    {
+<# foreach(var overload in overloads) { #>
+		/// <summary>
+		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// </summary>
+		public Stubbed<#=overload.ClassName#><#=overload.TypeParamList#> Stub<#=overload.TypeParamList#>(<#=overload.ClassName#><#=overload.TypeParamList#> method, <#=overload.ClassName#><#=overload.TypeParamList#> stub) 
+		{ 
+			return RegisterStub(method, stub, new Stubbed<#=overload.ClassName#><#=overload.TypeParamList#>()); 
+		}
+		 
+<# } #>
+	}
+}
+<#@ include file="Overload.ttinclude" #>

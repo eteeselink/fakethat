@@ -1,0 +1,57 @@
+﻿<#+
+
+    private class Arg
+    {
+        public readonly string TypeName;
+        public readonly string Name;
+		public readonly int Index;
+
+        public Arg(string typeName, string name)
+        {
+            TypeName = typeName;
+            Name = name;
+        }
+
+        public Arg(int index)
+            : this(String.Format("T{0}", index), String.Format("Arg{0}", index))
+        {
+			Index = index;
+		}
+
+        public string AsField { get { return String.Format("{0} {1}", TypeName, Name); } }
+        public string AsParameter { get { return String.Format("{0} {1}", TypeName, Name.ToLower()); } }
+    }
+
+    private class Overload
+    {
+        public readonly string TypeParamList;
+        public readonly string ClassName;
+        public readonly bool IsFunc;
+        public readonly Arg[] Args;
+        public readonly Arg Retval;
+        public readonly Arg[] Fields; // Retval + Args
+
+        public Overload(int paramCount, bool isFunc)
+        {
+            ClassName = isFunc ? "Func" : "Action";
+            IsFunc = isFunc;
+            Args = Enumerable.Range(1, paramCount).Select(i => new Arg(i)).ToArray();
+            Retval = new Arg("TRet", "ReturnValue");
+
+            IEnumerable<Arg> fields = Args;
+            if (IsFunc)
+            {
+                fields = new[] { Retval }.Concat(fields);
+            }
+            Fields = fields.ToArray();
+
+            TypeParamList = (Fields.Any()) ? "<" + String.Join(", ", Fields.Select(f => f.TypeName)) + ">" : "";
+        }
+    }
+
+	private Overload[] overloads = 
+		Enumerable.Range(0, 9).Select(i => new Overload(i, false))
+		.Concat(
+			Enumerable.Range(0, 9).Select(i => new Overload(i, true))
+		).ToArray();
+#>
