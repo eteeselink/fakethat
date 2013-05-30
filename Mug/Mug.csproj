@@ -90,7 +90,9 @@
     <None Include="..\TODO.md">
       <Link>TODO.md</Link>
     </None>
-    <None Include="Mug.xdoc" />
+    <None Include="Mug.xdoc">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
