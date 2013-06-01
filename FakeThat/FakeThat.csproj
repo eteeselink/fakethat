@@ -48,9 +48,10 @@
     <Compile Include="Fake.cs" />
     <Compile Include="Engine\Interceptor.cs" />
     <Compile Include="Fake.Overloads.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Fake.Overloads.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StubbedOperation.cs">
@@ -69,11 +70,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Overload.ttinclude" />
     <None Include="Fake.Overloads.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Fake.Overloads.cs</LastGenOutput>
     </None>
+    <None Include="Overload.ttinclude" />
     <None Include="StubbedOperation.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>StubbedOperation.cs</LastGenOutput>

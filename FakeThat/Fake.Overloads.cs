@@ -91,65 +91,65 @@ namespace FakeThat
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1> Stub<TRet, T1>(Func<TRet, T1> method, Func<TRet, T1> stub) 
+		public StubbedFunc<T1, TRet> Stub<T1, TRet>(Func<T1, TRet> method, Func<T1, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, TRet>()); 
 		}
 		 
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1, T2> Stub<TRet, T1, T2>(Func<TRet, T1, T2> method, Func<TRet, T1, T2> stub) 
+		public StubbedFunc<T1, T2, TRet> Stub<T1, T2, TRet>(Func<T1, T2, TRet> method, Func<T1, T2, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1, T2>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, T2, TRet>()); 
 		}
 		 
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1, T2, T3> Stub<TRet, T1, T2, T3>(Func<TRet, T1, T2, T3> method, Func<TRet, T1, T2, T3> stub) 
+		public StubbedFunc<T1, T2, T3, TRet> Stub<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> method, Func<T1, T2, T3, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1, T2, T3>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, T2, T3, TRet>()); 
 		}
 		 
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1, T2, T3, T4> Stub<TRet, T1, T2, T3, T4>(Func<TRet, T1, T2, T3, T4> method, Func<TRet, T1, T2, T3, T4> stub) 
+		public StubbedFunc<T1, T2, T3, T4, TRet> Stub<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> method, Func<T1, T2, T3, T4, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1, T2, T3, T4>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, T2, T3, T4, TRet>()); 
 		}
 		 
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1, T2, T3, T4, T5> Stub<TRet, T1, T2, T3, T4, T5>(Func<TRet, T1, T2, T3, T4, T5> method, Func<TRet, T1, T2, T3, T4, T5> stub) 
+		public StubbedFunc<T1, T2, T3, T4, T5, TRet> Stub<T1, T2, T3, T4, T5, TRet>(Func<T1, T2, T3, T4, T5, TRet> method, Func<T1, T2, T3, T4, T5, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1, T2, T3, T4, T5>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, T2, T3, T4, T5, TRet>()); 
 		}
 		 
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1, T2, T3, T4, T5, T6> Stub<TRet, T1, T2, T3, T4, T5, T6>(Func<TRet, T1, T2, T3, T4, T5, T6> method, Func<TRet, T1, T2, T3, T4, T5, T6> stub) 
+		public StubbedFunc<T1, T2, T3, T4, T5, T6, TRet> Stub<T1, T2, T3, T4, T5, T6, TRet>(Func<T1, T2, T3, T4, T5, T6, TRet> method, Func<T1, T2, T3, T4, T5, T6, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1, T2, T3, T4, T5, T6>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, T2, T3, T4, T5, T6, TRet>()); 
 		}
 		 
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1, T2, T3, T4, T5, T6, T7> Stub<TRet, T1, T2, T3, T4, T5, T6, T7>(Func<TRet, T1, T2, T3, T4, T5, T6, T7> method, Func<TRet, T1, T2, T3, T4, T5, T6, T7> stub) 
+		public StubbedFunc<T1, T2, T3, T4, T5, T6, T7, TRet> Stub<T1, T2, T3, T4, T5, T6, T7, TRet>(Func<T1, T2, T3, T4, T5, T6, T7, TRet> method, Func<T1, T2, T3, T4, T5, T6, T7, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1, T2, T3, T4, T5, T6, T7>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, T2, T3, T4, T5, T6, T7, TRet>()); 
 		}
 		 
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public StubbedFunc<TRet, T1, T2, T3, T4, T5, T6, T7, T8> Stub<TRet, T1, T2, T3, T4, T5, T6, T7, T8>(Func<TRet, T1, T2, T3, T4, T5, T6, T7, T8> method, Func<TRet, T1, T2, T3, T4, T5, T6, T7, T8> stub) 
+		public StubbedFunc<T1, T2, T3, T4, T5, T6, T7, T8, TRet> Stub<T1, T2, T3, T4, T5, T6, T7, T8, TRet>(Func<T1, T2, T3, T4, T5, T6, T7, T8, TRet> method, Func<T1, T2, T3, T4, T5, T6, T7, T8, TRet> stub) 
 		{ 
-			return RegisterStub(method, stub, new StubbedFunc<TRet, T1, T2, T3, T4, T5, T6, T7, T8>()); 
+			return RegisterStub(method, stub, new StubbedFunc<T1, T2, T3, T4, T5, T6, T7, T8, TRet>()); 
 		}
 		 
 	}

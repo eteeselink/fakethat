@@ -64,10 +64,12 @@ namespace FakeThat.Engine
             try
             {
                 object retval = operation.Delegate.DynamicInvoke(invocation.Arguments);
-
-                // prepend the return value to the argument list, as per StubbedOperationBase.AddCall's signature
-                arguments = new[] { retval }.Concat(arguments);
-
+                if (operation.Delegate.Method.ReturnType != typeof(void))
+                {
+                    // prepend the return value to the argument list, as per StubbedOperationBase.AddCall's signature
+                    arguments = arguments.Concat(new[] { retval });                    
+                }
+                
                 invocation.ReturnValue = retval;
             }
             catch (System.Reflection.TargetInvocationException e)

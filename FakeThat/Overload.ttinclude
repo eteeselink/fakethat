@@ -6,16 +6,16 @@
         public readonly string Name;
 		public readonly int Index;
 
-        public Arg(string typeName, string name)
+        public Arg(string typeName, string name, int index)
         {
             TypeName = typeName;
             Name = name;
+			Index = index;
         }
 
         public Arg(int index)
-            : this(String.Format("T{0}", index), String.Format("Arg{0}", index))
+            : this(String.Format("T{0}", index), String.Format("Arg{0}", index), index)
         {
-			Index = index;
 		}
 
         public string AsField { get { return String.Format("{0} {1}", TypeName, Name); } }
@@ -36,12 +36,12 @@
             ClassName = isFunc ? "Func" : "Action";
             IsFunc = isFunc;
             Args = Enumerable.Range(1, paramCount).Select(i => new Arg(i)).ToArray();
-            Retval = new Arg("TRet", "ReturnValue");
+            Retval = new Arg("TRet", "ReturnValue", Args.Length + 1);
 
             IEnumerable<Arg> fields = Args;
             if (IsFunc)
             {
-                fields = new[] { Retval }.Concat(fields);
+                fields = fields.Concat(new[] { Retval });
             }
             Fields = fields.ToArray();
 

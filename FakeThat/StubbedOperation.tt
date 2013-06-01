@@ -35,7 +35,7 @@ namespace FakeThat
                 throw new ArgumentException("Internal FakeThat error: expected exactly <#=overload.Fields.Length#> arguments");
             }
 
-            var call = new Call(<#= String.Join(", ", overload.Fields.Select(f => String.Format("({0})arguments[{1}]", f.TypeName, f.Index - (overload.IsFunc ? 0 : 1)))) #>);
+            var call = new Call(<#= String.Join(", ", overload.Fields.Select(f => String.Format("({0})arguments[{1}]", f.TypeName, f.Index - 1))) #>);
             calls.Add(call);
         } 
     }
