@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\Exceptions.cs" />
+    <Compile Include="Engine\PropertyLambda.cs" />
     <Compile Include="Engine\SetterRegistry.cs" />
     <Compile Include="Fake.cs" />
     <Compile Include="Engine\Interceptor.cs" />

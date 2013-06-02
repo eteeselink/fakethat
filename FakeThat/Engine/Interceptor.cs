@@ -44,14 +44,15 @@ namespace FakeThat.Engine
             string methodSignature = invocation.Method.ToString();
             if (!operations.ContainsKey(methodSignature))
             {
-                //// the setterRegistry only has a 'latest setter' if a setter has been recently (implicitly) converted
-                //// to the property type, typically on a call that invoked this particular `Intercept` call. In that case,
-                //// we want to newly tie the given setter to this invocation
-                //if (methodSignature.StartsWith("Void set_") && setterRegistry.HasLatestSetter())
-                //{
-                //    RegisterOperation(invocation.Method, setterRegistry.UseLatestSetter());
-                //}
-                //else
+                // the setterRegistry only has a 'latest setter' if a setter has been recently (implicitly) converted
+                // to the property type, typically on a call that invoked this particular `Intercept` call. In that case,
+                // we want to newly tie the given setter to this invocation
+                if (methodSignature.StartsWith("Void set_") && setterRegistry.HasLatestSetter())
+                {
+                    // FIXME: How to i get the setter back?
+                    //RegisterOperation(invocation.Method, setterRegistry.UseLatestSetter());
+                }
+                else
                 {
                     throw new MethodNotStubbedException(invocation.Method.Name + " was called but not registered with a Stub() call (on an object of type " + invocation.Method.DeclaringType.Name + ")");
                 }

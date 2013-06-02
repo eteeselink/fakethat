@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using FakeThat.Engine;
+using System.Linq.Expressions;
 
 namespace FakeThat
 {
@@ -64,6 +65,24 @@ namespace FakeThat
         {
             interceptor.RegisterOperation(methodDelegate.Method, instead, stubbedOperation);
             return stubbedOperation;
+        }
+
+        /// <summary>
+        /// Execute `resultFunc` when the property specified in `propertyLookupExpression` is called. For example,
+        /// call `fake.StubGetter(() => fake.Object.MyProperty, () => 5)` to always return five.
+        /// </summary>
+        /// <returns></returns>
+        public StubbedFunc<TProp> StubGetter<TProp>(Expression<Func<TProp>> propertyLookupExpression, Func<TProp> resultFunc)
+        {
+            var lambda = PropertyLambda<TObj>.Create(propertyLookupExpression);
+            var stubbedOperation = new StubbedFunc<TProp>();
+            interceptor.RegisterOperation(lambda.Getter, resultFunc, stubbedOperation);
+            return stubbedOperation;
+        }
+
+        public StubbedSetter<TProp> StubSetter<TProp>(Action<TProp> onSet)
+        {
+            return new StubbedSetter<TProp>();
         }
     }
 
