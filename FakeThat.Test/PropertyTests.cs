@@ -51,6 +51,7 @@ namespace FakeThat.Test
             var fake = new Fake<IPropertyInterface>();
             var obj = fake.Object;
 
+
             fake.StubSetter(i => { }, (int i) => { });
         }
     }
