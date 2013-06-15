@@ -48,7 +48,11 @@ namespace FakeThat.Engine
 
         public void UnexpectSetter()
         {
-            expectedSetterOperation = null;
+            if (expectedSetterOperation != null)
+            {
+                expectedSetterOperation = null;
+                throw new ThatsNotASetterException();
+            }
         }
 
         public void Intercept(Castle.DynamicProxy.IInvocation invocation)
@@ -66,6 +70,7 @@ namespace FakeThat.Engine
                         throw new ThatsNotASetterException();
                     }
                     RegisterOperation(invocation.Method, expectedSetterOperation.Delegate, expectedSetterOperation.CallHistory);
+                    expectedSetterOperation = null;
                     return;
                 }
                 else
