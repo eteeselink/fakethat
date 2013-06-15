@@ -17,9 +17,9 @@ namespace FakeThat
 		/// <summary>
 		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
 		/// </summary>
-		public Stubbed<#=overload.ClassName#><#=overload.TypeParamList#> Stub<#=overload.TypeParamList#>(<#=overload.ClassName#><#=overload.TypeParamList#> method, <#=overload.ClassName#><#=overload.TypeParamList#> stub) 
+		public <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#> Stub<#=overload.TypeParamList#>(<#=overload.ClassName#><#=overload.TypeParamList#> method, <#=overload.ClassName#><#=overload.TypeParamList#> stub) 
 		{ 
-			return RegisterStub(method, stub, new Stubbed<#=overload.ClassName#><#=overload.TypeParamList#>()); 
+			return RegisterStub(method, stub, new <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#>()); 
 		}
 		 
 <# } #>

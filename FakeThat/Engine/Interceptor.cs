@@ -11,7 +11,7 @@ namespace FakeThat.Engine
         private class Operation
         {
             public Delegate Delegate;
-            public CallHistoryBase StubbedOperation;
+            public CallHistoryBase CallHistory;
         }
 
         private Dictionary<string, Operation> operations = new Dictionary<string, Operation>();
@@ -31,23 +31,24 @@ namespace FakeThat.Engine
             operations[method.ToString()] = new Operation() 
             { 
                 Delegate = instead,
-                StubbedOperation = stubbedOperation
+                CallHistory = stubbedOperation
             };
         }
 
-        private Delegate setterStub = null;
-        private CallHistoryBase stubbedSetter;
+        private Operation expectedSetterOperation = null;
 
-        public void ExpectSetter(Delegate setterStub, CallHistoryBase stubbedSetter)
+        public void ExpectSetter(Delegate setterStub, CallHistoryBase callHistory)
         {
-            this.setterStub = setterStub;
-            this.stubbedSetter = stubbedSetter;
+            this.expectedSetterOperation = new Operation
+            {
+                Delegate = setterStub,
+                CallHistory = callHistory
+            };
         }
 
         public void UnexpectSetter()
         {
-            setterStub = null;
-            stubbedSetter = null;
+            expectedSetterOperation = null;
         }
 
         public void Intercept(Castle.DynamicProxy.IInvocation invocation)
@@ -56,15 +57,16 @@ namespace FakeThat.Engine
             string methodSignature = invocation.Method.ToString();
             if (!operations.ContainsKey(methodSignature))
             {
-                // if OnSetter has a listener, it means that Fake.StubSetter was just called
-                if (setterStub != null)
+                // if expectedSetterOperation isn't null, it means that Fake.StubSetter was just called
+                if (expectedSetterOperation != null)
                 {
                     const string prefix = "Void set_";
                     if (!methodSignature.StartsWith(prefix))
                     {
                         throw new ThatsNotASetterException();
                     }
-                    RegisterOperation(invocation.Method, setterStub, stubbedSetter);
+                    RegisterOperation(invocation.Method, expectedSetterOperation.Delegate, expectedSetterOperation.CallHistory);
+                    return;
                 }
                 else
                 {
@@ -92,7 +94,7 @@ namespace FakeThat.Engine
                 throw e.InnerException;
             }
 
-            operation.StubbedOperation.RememberCall(arguments.ToArray());
+            operation.CallHistory.RememberCall(arguments.ToArray());
         }
     }
 }

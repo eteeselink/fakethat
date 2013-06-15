@@ -28,6 +28,7 @@ namespace FakeThat.Test
             getter.Calls.Last().ReturnValue.ShouldBe(3);
         }
 
+        [Test]
         public void StubbedSetterIsCalledWhenSet()
         {
             var fake = new Fake<IPropertyInterface>();
@@ -35,12 +36,22 @@ namespace FakeThat.Test
 
             int latestValue = 0;
 
-
-            var setter = fake.StubSetter(i => obj.GetSet = i, (int i) => latestValue = i);
-            //obj.GetSet = fake.StubSetter((int i) => latestValue = i);
+            var setterHistory = fake.StubSetter(i => obj.GetSet = i, (int i) => latestValue = i);
             obj.GetSet = 6;
 
             latestValue.ShouldBe(6);
+            setterHistory.CallCount.ShouldBe(1);
+            setterHistory.Calls.Single().Arg1.ShouldBe(6);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ThatsNotASetterException))]
+        public void StubSetterFailsWhenCalled()
+        {
+            var fake = new Fake<IPropertyInterface>();
+            var obj = fake.Object;
+
+            fake.StubSetter(i => { }, (int i) => { });
         }
     }
 }

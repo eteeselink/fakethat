@@ -68,31 +68,30 @@ namespace FakeThat
         }
 
         /// <summary>
-        /// Execute `resultFunc` when the property specified in `propertyLookupExpression` is called. For example,
-        /// call `fake.StubGetter(() => fake.Object.MyProperty, () => 5)` to always return five.
+        /// Execute `onGet` when the property specified in `propertyLookupExpression` is called. For example,
+        /// call <code>fake.StubGetter(() => fake.Object.MyProperty, () => 5)</code> to always return five.
         /// </summary>
-        /// <returns></returns>
-        public StubbedFunc<TProp> StubGetter<TProp>(Expression<Func<TProp>> propertyLookupExpression, Func<TProp> resultFunc)
+        public FuncCallHistory<TProp> StubGetter<TProp>(Expression<Func<TProp>> propertyLookupExpression, Func<TProp> onGet)
         {
             var lambda = PropertyLambda<TObj>.Create(propertyLookupExpression);
-            var stubbedOperation = new StubbedFunc<TProp>();
-            interceptor.RegisterOperation(lambda.Getter, resultFunc, stubbedOperation);
+            var stubbedOperation = new FuncCallHistory<TProp>();
+            interceptor.RegisterOperation(lambda.Getter, onGet, stubbedOperation);
             return stubbedOperation;
-        }
+        }       
 
-        public StubbedSetter<TProp> StubSetter<TProp>(Action<TProp> onSet)
+        /// <summary>
+        /// Execute `onSet` when the property specified in `setterCall` is set.
+        /// </summary>
+        /// <param name="onSet">Pass a lambda of the following form: <code>v => fake.Object.SomeProperty = v</code>.</param>
+        /// <param name="setterCall">The action to perform whenever the property is set</param>
+        public ActionCallHistory<TProp> StubSetter<TProp>(Action<FakeValue<TProp>> setterCall, Action<TProp> onSet)
         {
-            return new StubbedSetter<TProp>();
-        }
-
-        public StubbedAction<TProp> StubSetter<TProp>(Action<FakeValue<TProp>> setterCall, Action<TProp> onSet)
-        {
-            var stubbedOperation = new StubbedAction<TProp>();
-            interceptor.ExpectSetter(onSet, stubbedOperation);
+            var callHistory = new ActionCallHistory<TProp>();
+            interceptor.ExpectSetter(onSet, callHistory);
             setterCall(new FakeValue<TProp>());
             interceptor.UnexpectSetter();
 
-            return stubbedOperation;
+            return callHistory;
         }
     }
 
