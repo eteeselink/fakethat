@@ -11,7 +11,7 @@ using System.Text;
 namespace FakeThat
 {
 <# foreach(var overload in overloads) { #>
-    public class Stubbed<#=overload.ClassName#><#=overload.TypeParamList#> : StubbedOperationBase<Stubbed<#=overload.ClassName#><#=overload.TypeParamList#>.Call>
+    public class <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#> : CallHistoryBase<<#=overload.ClassName#>CallHistory<#=overload.TypeParamList#>.Call>
     {
         public struct Call
         {

@@ -12,4 +12,13 @@ namespace FakeThat.Engine
     {
         internal MethodNotStubbedException(string msg) : base(msg) { }
     }
+
+    /// <summary>
+    /// Thrown when the body of the setter action passed to <see cref="Fake.StubSetter"/> is
+    /// not actually a setter assignment.
+    /// </summary>
+    public class ThatsNotASetterException : Exception
+    {
+        internal ThatsNotASetterException() : base("Please pass an expression of the form `v => fake.Object.SomeSetter = v` to `StubSetter`") { }
+    }
 }

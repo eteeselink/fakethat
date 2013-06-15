@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FakeThat
 {
-    public class StubbedAction : StubbedOperationBase<StubbedAction.Call>
+    public class ActionCallHistory : CallHistoryBase<ActionCallHistory.Call>
     {
         public struct Call
         {
@@ -22,7 +22,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1> : StubbedOperationBase<StubbedAction<T1>.Call>
+    public class ActionCallHistory<T1> : CallHistoryBase<ActionCallHistory<T1>.Call>
     {
         public struct Call
         {
@@ -44,7 +44,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1, T2> : StubbedOperationBase<StubbedAction<T1, T2>.Call>
+    public class ActionCallHistory<T1, T2> : CallHistoryBase<ActionCallHistory<T1, T2>.Call>
     {
         public struct Call
         {
@@ -68,7 +68,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1, T2, T3> : StubbedOperationBase<StubbedAction<T1, T2, T3>.Call>
+    public class ActionCallHistory<T1, T2, T3> : CallHistoryBase<ActionCallHistory<T1, T2, T3>.Call>
     {
         public struct Call
         {
@@ -94,7 +94,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1, T2, T3, T4> : StubbedOperationBase<StubbedAction<T1, T2, T3, T4>.Call>
+    public class ActionCallHistory<T1, T2, T3, T4> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4>.Call>
     {
         public struct Call
         {
@@ -122,7 +122,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1, T2, T3, T4, T5> : StubbedOperationBase<StubbedAction<T1, T2, T3, T4, T5>.Call>
+    public class ActionCallHistory<T1, T2, T3, T4, T5> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5>.Call>
     {
         public struct Call
         {
@@ -152,7 +152,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1, T2, T3, T4, T5, T6> : StubbedOperationBase<StubbedAction<T1, T2, T3, T4, T5, T6>.Call>
+    public class ActionCallHistory<T1, T2, T3, T4, T5, T6> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6>.Call>
     {
         public struct Call
         {
@@ -184,7 +184,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1, T2, T3, T4, T5, T6, T7> : StubbedOperationBase<StubbedAction<T1, T2, T3, T4, T5, T6, T7>.Call>
+    public class ActionCallHistory<T1, T2, T3, T4, T5, T6, T7> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6, T7>.Call>
     {
         public struct Call
         {
@@ -218,7 +218,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedAction<T1, T2, T3, T4, T5, T6, T7, T8> : StubbedOperationBase<StubbedAction<T1, T2, T3, T4, T5, T6, T7, T8>.Call>
+    public class ActionCallHistory<T1, T2, T3, T4, T5, T6, T7, T8> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6, T7, T8>.Call>
     {
         public struct Call
         {
@@ -254,7 +254,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<TRet> : StubbedOperationBase<StubbedFunc<TRet>.Call>
+    public class FuncCallHistory<TRet> : CallHistoryBase<FuncCallHistory<TRet>.Call>
     {
         public struct Call
         {
@@ -276,7 +276,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, TRet> : StubbedOperationBase<StubbedFunc<T1, TRet>.Call>
+    public class FuncCallHistory<T1, TRet> : CallHistoryBase<FuncCallHistory<T1, TRet>.Call>
     {
         public struct Call
         {
@@ -300,7 +300,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, T2, TRet> : StubbedOperationBase<StubbedFunc<T1, T2, TRet>.Call>
+    public class FuncCallHistory<T1, T2, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, TRet>.Call>
     {
         public struct Call
         {
@@ -326,7 +326,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, T2, T3, TRet> : StubbedOperationBase<StubbedFunc<T1, T2, T3, TRet>.Call>
+    public class FuncCallHistory<T1, T2, T3, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, TRet>.Call>
     {
         public struct Call
         {
@@ -354,7 +354,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, T2, T3, T4, TRet> : StubbedOperationBase<StubbedFunc<T1, T2, T3, T4, TRet>.Call>
+    public class FuncCallHistory<T1, T2, T3, T4, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, TRet>.Call>
     {
         public struct Call
         {
@@ -384,7 +384,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, T2, T3, T4, T5, TRet> : StubbedOperationBase<StubbedFunc<T1, T2, T3, T4, T5, TRet>.Call>
+    public class FuncCallHistory<T1, T2, T3, T4, T5, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, TRet>.Call>
     {
         public struct Call
         {
@@ -416,7 +416,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, T2, T3, T4, T5, T6, TRet> : StubbedOperationBase<StubbedFunc<T1, T2, T3, T4, T5, T6, TRet>.Call>
+    public class FuncCallHistory<T1, T2, T3, T4, T5, T6, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, TRet>.Call>
     {
         public struct Call
         {
@@ -450,7 +450,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, T2, T3, T4, T5, T6, T7, TRet> : StubbedOperationBase<StubbedFunc<T1, T2, T3, T4, T5, T6, T7, TRet>.Call>
+    public class FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, TRet>.Call>
     {
         public struct Call
         {
@@ -486,7 +486,7 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
-    public class StubbedFunc<T1, T2, T3, T4, T5, T6, T7, T8, TRet> : StubbedOperationBase<StubbedFunc<T1, T2, T3, T4, T5, T6, T7, T8, TRet>.Call>
+    public class FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, T8, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, T8, TRet>.Call>
     {
         public struct Call
         {

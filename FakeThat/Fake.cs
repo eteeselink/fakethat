@@ -48,7 +48,7 @@ namespace FakeThat
         public Fake(bool autoStub)
         {
             var gen = new Castle.DynamicProxy.ProxyGenerator();
-            interceptor = new Interceptor(null);
+            interceptor = new Interceptor();
 
             Object = gen.CreateInterfaceProxyWithoutTarget<TObj>(interceptor);
         }
@@ -61,7 +61,7 @@ namespace FakeThat
             : this(false)
         { }
 
-        private T RegisterStub<T>(Delegate methodDelegate, Delegate instead, T stubbedOperation) where T : StubbedOperationBase
+        private T RegisterStub<T>(Delegate methodDelegate, Delegate instead, T stubbedOperation) where T : CallHistoryBase
         {
             interceptor.RegisterOperation(methodDelegate.Method, instead, stubbedOperation);
             return stubbedOperation;
@@ -83,6 +83,16 @@ namespace FakeThat
         public StubbedSetter<TProp> StubSetter<TProp>(Action<TProp> onSet)
         {
             return new StubbedSetter<TProp>();
+        }
+
+        public StubbedAction<TProp> StubSetter<TProp>(Action<FakeValue<TProp>> setterCall, Action<TProp> onSet)
+        {
+            var stubbedOperation = new StubbedAction<TProp>();
+            interceptor.ExpectSetter(onSet, stubbedOperation);
+            setterCall(new FakeValue<TProp>());
+            interceptor.UnexpectSetter();
+
+            return stubbedOperation;
         }
     }
 

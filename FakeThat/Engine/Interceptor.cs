@@ -8,19 +8,16 @@ namespace FakeThat.Engine
 {
     internal class Interceptor : Castle.DynamicProxy.IInterceptor
     {
-        private readonly SetterRegistry setterRegistry;
-
         private class Operation
         {
             public Delegate Delegate;
-            public StubbedOperationBase StubbedOperation;
+            public CallHistoryBase StubbedOperation;
         }
 
         private Dictionary<string, Operation> operations = new Dictionary<string, Operation>();
 
-        public Interceptor(SetterRegistry registry)
+        public Interceptor()
         {
-            this.setterRegistry = registry;
         }
 
         /// <summary>
@@ -29,7 +26,7 @@ namespace FakeThat.Engine
         /// </summary>
         /// <param name="method"></param>
         /// <param name="instead"></param>
-        public void RegisterOperation(MethodInfo method, Delegate instead, StubbedOperationBase stubbedOperation)
+        public void RegisterOperation(MethodInfo method, Delegate instead, CallHistoryBase stubbedOperation)
         {
             operations[method.ToString()] = new Operation() 
             { 
@@ -38,19 +35,36 @@ namespace FakeThat.Engine
             };
         }
 
+        private Delegate setterStub = null;
+        private CallHistoryBase stubbedSetter;
+
+        public void ExpectSetter(Delegate setterStub, CallHistoryBase stubbedSetter)
+        {
+            this.setterStub = setterStub;
+            this.stubbedSetter = stubbedSetter;
+        }
+
+        public void UnexpectSetter()
+        {
+            setterStub = null;
+            stubbedSetter = null;
+        }
+
         public void Intercept(Castle.DynamicProxy.IInvocation invocation)
         {
             // find registered operation, and invoke it if possible.
             string methodSignature = invocation.Method.ToString();
             if (!operations.ContainsKey(methodSignature))
             {
-                // the setterRegistry only has a 'latest setter' if a setter has been recently (implicitly) converted
-                // to the property type, typically on a call that invoked this particular `Intercept` call. In that case,
-                // we want to newly tie the given setter to this invocation
-                if (methodSignature.StartsWith("Void set_") && setterRegistry.HasLatestSetter())
+                // if OnSetter has a listener, it means that Fake.StubSetter was just called
+                if (setterStub != null)
                 {
-                    // FIXME: How to i get the setter back?
-                    //RegisterOperation(invocation.Method, setterRegistry.UseLatestSetter());
+                    const string prefix = "Void set_";
+                    if (!methodSignature.StartsWith(prefix))
+                    {
+                        throw new ThatsNotASetterException();
+                    }
+                    RegisterOperation(invocation.Method, setterStub, stubbedSetter);
                 }
                 else
                 {

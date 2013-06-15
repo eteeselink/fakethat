@@ -33,8 +33,14 @@ namespace FakeThat.Test
             var fake = new Fake<IPropertyInterface>();
             var obj = fake.Object;
 
-            obj.GetSet = fake.StubSetter((int s) => Console.WriteLine(s));
+            int latestValue = 0;
 
+
+            var setter = fake.StubSetter(i => obj.GetSet = i, (int i) => latestValue = i);
+            //obj.GetSet = fake.StubSetter((int i) => latestValue = i);
+            obj.GetSet = 6;
+
+            latestValue.ShouldBe(6);
         }
     }
 }

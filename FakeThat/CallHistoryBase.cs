@@ -18,7 +18,7 @@ using System.Text;
 
 namespace FakeThat
 {
-    public abstract class StubbedOperationBase
+    public abstract class CallHistoryBase
     {
         /// <summary>
         /// Register a call that was successfully completed with this Stubbed[Func/Action]
@@ -28,13 +28,13 @@ namespace FakeThat
         internal abstract void RememberCall(object[] arguments);
     }
 
-    public abstract class StubbedOperationBase<TCall> : StubbedOperationBase
+    public abstract class CallHistoryBase<TCall> : CallHistoryBase
     {
         protected readonly List<TCall> calls;
         public IEnumerable<TCall> Calls { get { return calls; } }
         public int CallCount { get { return calls.Count; } }
 
-        public StubbedOperationBase()
+        public CallHistoryBase()
         {
             calls = new List<TCall>();
         }
