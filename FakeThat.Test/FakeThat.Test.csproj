@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Example.cs" />
     <Compile Include="FoolAround.cs" />
     <Compile Include="IBoringInterface.cs" />
     <Compile Include="IPropertyInterface.cs" />

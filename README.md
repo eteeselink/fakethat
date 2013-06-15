@@ -3,58 +3,77 @@ Ridiculously simple mocking for .NET
 
 [![Build Status](https://travis-ci.org/eteeselink/fakethat.png)](https://travis-ci.org/eteeselink/fakethat)
 
-Mug is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates. This means that unlike with other mocking frameworks, you just write snippets of code in which you check whether the stubbed method has been called with the expected parameters and from which you return appropriate values. It's like writing a stub class, except right in the body of your test. For example:
+``` c#
+// Create a fake Death Star
+var fakeStar = new Fake<IDeathStar>();
+
+// Set up the fake so that a call to Shoot(Planet) always misses
+var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
+
+// give the fake Death Star to a real Vader (the class we wish to test)
+var vader = new Vader(fakeStar.Object);
+vader.GetAngry();
+
+// Check whether our stubbed method was indeed called. We can use plain LINQ and
+// any preferred unit testing / assertion library. No need to learn any special 
+// mocking-framework assertion/verification syntax.
+shoot.CallCount.ShouldBe(2);
+
+// We have full access to the call history.
+shoot.Calls.First().Arg1.Name.ShouldBe("Alderaan");
+shoot.Calls.First().ReturnValue.ShouldContain("Haha,");
+shoot.Calls.Last().Arg1.Name.ShouldBe("Naboo");
+```
+<small>Fancy `Should*` assertion methods courtesy of the excellent [Shouldly](http://shouldly.github.io/) library</small>
+
+Fake That is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates or lambda expressions. 
+This means that unlike with other mocking frameworks, 
+you just write snippets of code in which you check whether the stubbed method has been called with the expected parameters and from which you return appropriate values. 
+It's like writing a stub class, except right in the body of your test.
+
+Though heavily inspired by [Moq](http://code.google.com/p/moq/) and [FakeItEasy](https://github.com/FakeItEasy/FakeItEasy), 
+Fake That is different in that it is comparably low on weird syntax.
+Fake That favours plain C# code and .NET data structures over "almost-like-English" fluent APIs that *just* can't do what you want it to do right now.
+
+For example:
+
+### Set up method argument assertions, return values, and side effects with plain C#
+
+Other libraries have extensive fluent syntax for specifying that a method may be called
+only with these and these arguments, and should return such and such a value. 
+In Fake That, you simply do this in a lambda expression.
 
 ``` c#
-// NUnit test for a Circle class that uses a PiGenerator instance to ensure that
-// only fresh values used of pi are used (just like with fruit).
-[TestFixture]
-public class CircleTest
+var fakeStar = new Fake<IDeathStar>();
+
+var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) =>
 {
-    [Test]
-    public void TestCircumference()
-    {
-        //create a new Mug object that holds mocked objects and methods
-        var mug = new Mug();
+    // Validate arguments using normal C# code
+    planet.ShouldNotBe(null);
 
-        // create a mock object for the IPiGenerator interface
-        var piGenerator = mug.Mock<IPiGenerator>();
-
-        // we're testing a circle with radius 2.0, passing in the
-        // piGenerator Mock object.
-        var circle = new Circle(piGenerator, 2.0);
-
-        bool wasCalled = false;
-
-        // stub the Pi Generator with an in-place block of code
-        mug.Stub(piGenerator.GeneratePi, delegate(int precision)
-        {
-            // check validity of argument with standard NUnit assertions
-            Assert.That(precision, Is.InRange(2, 3));
-
-            // we manually keep track of whether piGenerator.GeneratePi 
-            // was called. Note that a similar trick can be used to
-            // count the amount of calls, or to behave different on later
-            // calls.
-            wasCalled = true;
-
-            // return a sufficiently good approximation of pi
-            return 3.14;
-        });
-
-        // invoke the Circumference property that we're testing
-        double circumference = circle.Circumference;
-
-        // use fancy NUnit features to check that result value is about 4*pi.
-        Assert.That(circumference, Is.EqualTo(12.56).Within(.005));
-
-        // ensure that the Circle class really did use the PiGenerator
-        Assert.That(wasCalled);
-    }
-}
+    // Make the return value depend on the arguments
+    return (planet.Name.Contains("oo")) ? "BOOM!" : "Haha, missed!";
+});
 ```
 
-That's it. Create a mock object and stub its methods with in-place delegates.
+### Full, strongly-typed, access to history of calls to stubbed methods
+
+Every `Stub` call returns `CallHistory` object with an IEnumerable `Calls` property.
+
+``` c#
+var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
+
+// .. call code that would call fakeStar.Object.Shoot()
+
+shoot.Calls
+	.Where(call => call.Arg1 == "Alderaan")
+	.All(call => call.ReturnValue.Contains("Haha,")
+	.ShouldBe(true);
+```
+
+OLD README BELOW
+================
+
 
 Features
 --------

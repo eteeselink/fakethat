@@ -1,10 +1,7 @@
 Todo
 ----
 
-* CountCalls for properties
-+ Check whether properties are well enough supported now
-    + Done! Added StubSetter for set-only properties. Hurray!
-* Completely redesign interface in better OO-manner
++ Completely redesign interface in better OO-manner
 
 ```
 var fake = new Fake<IAdder>();
