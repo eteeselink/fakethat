@@ -7,5 +7,3 @@ Backup/*
 /Mug.VisualState.xml
 /Releases/*.zip
 /Lab
-packages/*
-!packages/repositories.config
