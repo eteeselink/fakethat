@@ -1,6 +1,8 @@
 Ridiculously simple mocking for .NET
 ====================================
 
+[![Build Status](https://travis-ci.org/eteeselink/fakethat.png)](https://travis-ci.org/eteeselink/fakethat)
+
 Mug is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates. This means that unlike with other mocking frameworks, you just write snippets of code in which you check whether the stubbed method has been called with the expected parameters and from which you return appropriate values. It's like writing a stub class, except right in the body of your test. For example:
 
 ``` c#
@@ -105,3 +107,5 @@ Mug was written by Egbert Teeselink. It uses the excellent <a href="http://www.c
 
 Mug is released under the <a href="http://creativecommons.org/licenses/MIT/">MIT License</a>.
 
+Thanks to Travis-CI for a free build server, and to [danlimerick](http://danlimerick.wordpress.com/2013/02/03/build-your-open-source-net-project-on-travis-ci/) 
+for a guide on how to use it for (not officially supported) .NET/Mono code.
