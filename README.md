@@ -59,6 +59,10 @@ var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) =>
 });
 ```
 
+Note that you should specify the types of all arguments in the lambda expression (e.g. `(Planet planet) => ..`).
+This is because C# can't figure out which overload of `Shoot` you want to stub without those parameter types
+(even when there's no overloads).
+
 ### Full, strongly-typed, access to call history
 
 Every `Stub` call returns `CallHistory` object with an IEnumerable `Calls` property.
@@ -76,6 +80,8 @@ shoot.Calls
 
 ### Stub property getters and setters just the same
 
+Getters:
+
 ``` c#
 var isArmed = fakeStar.StubGetter(() => fakeStar.Object.IsArmed, (bool armed) => true);
 
@@ -83,6 +89,8 @@ vader.GetAngry();
 
 isArmed.CallCount.ShouldBe(1);
 ```
+
+Setters:
 
 ``` c#
 var target = fakeStar.StubSetter(v => fakeStar.Object.Target = v, (Planet planet) => 
@@ -96,6 +104,42 @@ target.CallCount.ShouldBe(1);
 ```
 
 
+Installation
+------------
+
+### Getting the binaries
+
+Currently: Compile from source with a single `xbuild FakeThat.sln` on the command line (install Mono first).
+The resulting FakeThat.dll will work on both Mono and .NET.
+`FakeThat.sln` is a Visual Studio 2010 solution, and I expect that it also works in MonoDevelop.
+
+TODO:
+* Download binaries
+* Install from NuGet
+
+### Supported platforms
+
+* .NET 4 and higher
+* Mono 2.8 and higher
+* .NET 3.5 support is currently lacking, 
+  but could be provided relatively easily with some conditional compilation. 
+  Please file an [issue](./issues) if you need this (or a pull request, of course).
+
+I have no clue to what extent all the half-assed .NET frameworks (Silverlight, Windows Phone, Win RT) support Fake That.
+If you find out, please [let me know](./issues). Thanks!
+
+
+Background
+---------
+I wrote Fake That because other C# mocking libraries made my upper back itch, 
+and that's a very difficult place to scratch. 
+
+Some design goals include:
+* Be simple enough to require very little documentation
+* Fully typechecked: no strings for method names and all that
+* Comfortably stay outside the "Mocks vs Stubs" discussion by allowing any usage patten you prefer.
+
+Please let me know if you think that I managed.
 
 OLD README BELOW
 ================
