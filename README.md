@@ -26,10 +26,13 @@ shoot.Calls.Last().Arg1.Name.ShouldBe("Naboo");
 ```
 <small>Fancy `Should*` assertion methods courtesy of the excellent [Shouldly](http://shouldly.github.io/) library</small>
 
+Description
+-----------
+
 Fake That is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates or lambda expressions. 
 This means that unlike with other mocking frameworks, 
-you just write snippets of code in which you check whether the stubbed method has been called with the expected parameters and from which you return appropriate values. 
-It's like writing a stub class, except right in the body of your test.
+you just write snippets of code in which you check whether the stubbed method has been called with the expected arguments and return appropriate values. 
+It's like writing a stub class, except without the boilerplate.
 
 Though heavily inspired by [Moq](http://code.google.com/p/moq/) and [FakeItEasy](https://github.com/FakeItEasy/FakeItEasy), 
 Fake That is different in that it is comparably low on weird syntax.
@@ -37,11 +40,11 @@ Fake That favours plain C# code and .NET data structures over "almost-like-Engli
 
 For example:
 
-### Set up method argument assertions, return values, and side effects with plain C#
+### Validate method arguments, set up return values and side effects, with plain C# 
 
 Other libraries have extensive fluent syntax for specifying that a method may be called
 only with these and these arguments, and should return such and such a value. 
-In Fake That, you simply do this in a lambda expression.
+In Fake That, you do this in a lambda expression that contains plain old C# code.
 
 ``` c#
 var fakeStar = new Fake<IDeathStar>();
@@ -56,7 +59,7 @@ var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) =>
 });
 ```
 
-### Full, strongly-typed, access to history of calls to stubbed methods
+### Full, strongly-typed, access to call history
 
 Every `Stub` call returns `CallHistory` object with an IEnumerable `Calls` property.
 
@@ -71,6 +74,29 @@ shoot.Calls
 	.ShouldBe(true);
 ```
 
+### Stub property getters and setters just the same
+
+``` c#
+var isArmed = fakeStar.StubGetter(() => fakeStar.Object.IsArmed, (bool armed) => true);
+
+vader.GetAngry();
+
+isArmed.CallCount.ShouldBe(1);
+```
+
+``` c#
+var target = fakeStar.StubSetter(v => fakeStar.Object.Target = v, (Planet planet) => 
+{
+    planet.Name.ShouldBe("Alderaan");
+});
+
+vader.GetAngry();
+
+target.CallCount.ShouldBe(1);
+```
+
+
+
 OLD README BELOW
 ================
 
@@ -81,7 +107,7 @@ Features
   * Fully typechecked object mocking
   * Use assertions and matchers from your favourite unit testing framework inside the methods of your mock object
   * No reference manual; there are only two methods
-  * Sure to work on .NET 3.5 and higher. Maybe also 2.0, but I haven't figured that out yet.
+  * Works on .NET 3.5 and higher. Maybe also 2.0, but I haven't figured that out yet.
   * Comfortably stays outside the "Mocks vs Stubs" discussion by using both terms in its two-word API, probably incorrectly.
 
 Rationale
