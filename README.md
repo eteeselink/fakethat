@@ -122,11 +122,13 @@ TODO:
 
 * .NET 4 and higher
 * Mono 2.8 and higher
-* .NET 3.5 support is currently lacking, 
-  but could be provided relatively easily with some conditional compilation. 
-  Please file an [issue](./issues) if you need this (or a pull request, of course).
 
-I have no clue to what extent all the half-assed .NET frameworks (Silverlight, Windows Phone, Win RT) support Fake That.
+.NET 3.5 support is currently lacking, 
+but could be provided relatively easily with some conditional compilation. 
+Please file an [issue](./issues) if you need this (or a pull request, of course).
+
+I have no clue to what extent all the half-assed .NET frameworks 
+(Silverlight, Windows Phone, Win RT, Client Profile) support Fake That.
 If you find out, please [let me know](./issues). Thanks!
 
 
