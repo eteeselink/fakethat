@@ -14,12 +14,12 @@ var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, misse
 var vader = new Vader(fakeStar.Object);
 vader.GetAngry();
 
-// Check whether our stubbed method was indeed called. We can use plain LINQ and
-// any preferred unit testing / assertion library. No need to learn any special 
-// mocking-framework assertion/verification syntax.
+// Check whether our stubbed method was indeed called. We can use any 
+// preferred unit testing / assertion library. No need to learn any special 
+// mocking-framework verification syntax.
 shoot.CallCount.ShouldBe(2);
 
-// We have full access to the call history.
+// We have full access to the call history using familiar LINQ operators.
 shoot.Calls.First().Arg1.Name.ShouldBe("Alderaan");
 shoot.Calls.First().ReturnValue.ShouldContain("Haha,");
 shoot.Calls.Last().Arg1.Name.ShouldBe("Naboo");
@@ -66,7 +66,7 @@ This is because C# can't figure out which overload of `Shoot` you want to stub w
 
 ### Full, strongly-typed, access to call history
 
-Every `Stub` call returns `CallHistory` object with an IEnumerable `Calls` property.
+Every `Stub` call returns a `CallHistory` object with an IEnumerable `Calls` property.
 
 ``` c#
 var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
