@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>FakeThat</id>
+    <version>0.1.4916.37521</version>
+    <authors>Egbert Teeselink</authors>
+    <owners>Egbert Teeselink</owners>
+    <licenseUrl>https://github.com/eteeselink/fakethat/blob/master/MIT-LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/eteeselink/fakethat</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Fake That, ridiculously simple mocking for c#</description>
+    <releaseNotes>First release.</releaseNotes>
+    <copyright>Copyright 2013 Egbert Teeselink</copyright>
+    <tags>Mock Stub Unit NUnit Moq FakeItEasy xUnit MBUnit MSTest</tags>
+  </metadata>
+</package>
