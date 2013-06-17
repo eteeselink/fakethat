@@ -5,4 +5,4 @@ install:
  
 script:
   - xbuild CI.proj
-  - nunit-console ./FakeThat.Test/bin/Debug/FakeThat.Test.dll
+  - nunit-console ./FakeThat.Test/bin/Release/FakeThat.Test.dll
