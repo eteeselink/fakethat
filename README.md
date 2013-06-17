@@ -29,7 +29,8 @@ shoot.Calls.Last().Arg1.Name.ShouldBe("Naboo");
 Description
 -----------
 
-Fake That is a simplistic mocking library for .NET that allows you to stub methods on mock objects with delegates or lambda expressions. 
+Fake That is a simplistic mocking library for C# 
+that allows you to stub methods on mock objects with delegates or lambda expressions. 
 This means that unlike with other mocking frameworks, 
 you just write snippets of code in which you check whether the stubbed method has been called with the expected arguments and return appropriate values. 
 It's like writing a stub class, except without the boilerplate.
