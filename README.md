@@ -24,7 +24,7 @@ shoot.Calls.First().Arg1.Name.ShouldBe("Alderaan");
 shoot.Calls.First().ReturnValue.ShouldContain("Haha,");
 shoot.Calls.Last().Arg1.Name.ShouldBe("Naboo");
 ```
-<sup>Fancy `Should*` assertion methods courtesy of the excellent [Shouldly](http://shouldly.github.io/) library</sup>
+<sup>Fancy `Should*` assertion methods courtesy of the excellent [Shouldly](http://shouldly.github.io/) library. Note that you don't at all need Shouldly to use Fake That.</sup>
 
 Description
 -----------
