@@ -41,7 +41,7 @@ Fake That favours plain C# code and .NET data structures over "almost-like-Engli
 
 For example:
 
-### Validate method arguments, set up return values and side effects, with plain C# 
+### Validate arguments, set up return values and side effects, with plain C# 
 
 Other libraries have extensive fluent syntax for specifying that a method may be called
 only with these and these arguments, and should return such and such a value. 
