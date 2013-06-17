@@ -15,7 +15,9 @@ namespace FakeThat
     {
 <# foreach(var overload in overloads) { #>
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#> Stub<#=overload.TypeParamList#>(<#=overload.ClassName#><#=overload.TypeParamList#> method, <#=overload.ClassName#><#=overload.TypeParamList#> stub) 
 		{ 

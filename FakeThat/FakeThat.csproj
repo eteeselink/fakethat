@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\IdentityEqualityComparer.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Engine\PropertyLambda.cs" />
     <Compile Include="Fake.cs" />
@@ -53,7 +54,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="SetterValue.cs" />
+    <Compile Include="FakeValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CallHistory.cs">
       <AutoGen>True</AutoGen>

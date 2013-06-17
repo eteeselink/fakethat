@@ -5,6 +5,8 @@ using System.Text;
 
 namespace FakeThat.Test
 {
+
+
     public class FoolAround
     {
         public interface IHello
@@ -12,14 +14,16 @@ namespace FakeThat.Test
             string Hello(string s);
         }
 
+#if DEBUG
         public void Moo()
         {
-            var fake = new Fake<IHello>();
-            var hello = fake.Stub(fake.Object.Hello, (string s) => "Hello " + s);
-            Console.WriteLine(fake.Object.Hello("moo"));
+            var fake = Fake.New<IHello>();
 
-            Console.WriteLine(hello.Calls.Single().Arg1);
-            Console.WriteLine(hello.CallCount);
+            fake.Stub(fake.Hello, (string s) => s + "hi");
+            var f = new Fake<IHello>();
+            
+            Console.WriteLine(fake.Hello("q"));
         }
+#endif
     }
 }

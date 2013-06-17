@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using FakeThat.Engine;
 using System.Linq.Expressions;
+using System.Collections.Concurrent;
 
 namespace FakeThat
 {
@@ -29,7 +30,38 @@ namespace FakeThat
                 }
             };
         }
+
+#if DEBUG
+        private static ConcurrentDictionary<object, WeakReference> fakes = new ConcurrentDictionary<object, WeakReference>(new IdentityEqualityComparer<object>());
+
+        public static T New<T>() where T : class
+        {
+            var fake = new Fake<T>();
+            return fake.Object;
+        }
+
+        internal static Fake<T> Get<T>(T obj) where T : class
+        {
+            return (Fake<T>)fakes[obj].Target;
+        }
+
+        protected void Remember<T>(Fake<T> fake) where T : class
+        {
+            fakes.TryAdd(fake.Object, new WeakReference(fake));
+        }
+#endif
     }
+
+#if DEBUG
+    public static class FakeExtensions
+    {
+        public static FuncCallHistory<T1, TRet> Stub<TObj, T1, TRet>(this TObj obj, Func<T1, TRet> method, Func<T1, TRet> stub) where TObj : class
+        {
+            var fake = Fake.Get<TObj>(obj);
+            return fake.Stub(method, stub);
+        }
+    }
+#endif
 
     public partial class Fake<TObj> : Fake 
         where TObj : class
@@ -51,6 +83,9 @@ namespace FakeThat
             interceptor = new Interceptor();
 
             Object = gen.CreateInterfaceProxyWithoutTarget<TObj>(interceptor);
+#if DEBUG
+            Remember(this);
+#endif
         }
 
         /// <summary>
@@ -69,7 +104,7 @@ namespace FakeThat
 
         /// <summary>
         /// Execute `onGet` when the property specified in `propertyLookupExpression` is called. For example,
-        /// call <code>fake.StubGetter(() => fake.Object.MyProperty, () => 5)</code> to always return five.
+        /// call `<code>fake.StubGetter(() => fake.Object.MyProperty, () => 5)</code>` to always return five.
         /// </summary>
         public FuncCallHistory<TProp> StubGetter<TProp>(Expression<Func<TProp>> propertyLookupExpression, Func<TProp> onGet)
         {
@@ -80,10 +115,11 @@ namespace FakeThat
         }       
 
         /// <summary>
-        /// Execute `onSet` when the property specified in `setterCall` is set.
+        /// Execute `onSet` when the property specified in `setterCall` is set. Call syntax:
+        /// `<code>fake.StubSetter(v => fake.Object.SomeProperty = v, value => { ... });</code>`
         /// </summary>
-        /// <param name="onSet">Pass a lambda of the following form: <code>v => fake.Object.SomeProperty = v</code>.</param>
-        /// <param name="setterCall">The action to perform whenever the property is set</param>
+        /// <param name="setterCall">Pass a lambda of the following form: <code>v => fake.Object.SomeProperty = v</code>.</param>
+        /// <param name="onSet">The action to perform whenever the property is set</param>
         public ActionCallHistory<TProp> StubSetter<TProp>(Action<FakeValue<TProp>> setterCall, Action<TProp> onSet)
         {
             var callHistory = new ActionCallHistory<TProp>();

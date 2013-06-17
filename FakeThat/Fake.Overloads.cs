@@ -9,7 +9,9 @@ namespace FakeThat
         where TObj : class
     {
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory Stub(Action method, Action stub) 
 		{ 
@@ -17,7 +19,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1> Stub<T1>(Action<T1> method, Action<T1> stub) 
 		{ 
@@ -25,7 +29,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1, T2> Stub<T1, T2>(Action<T1, T2> method, Action<T1, T2> stub) 
 		{ 
@@ -33,7 +39,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1, T2, T3> Stub<T1, T2, T3>(Action<T1, T2, T3> method, Action<T1, T2, T3> stub) 
 		{ 
@@ -41,7 +49,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1, T2, T3, T4> Stub<T1, T2, T3, T4>(Action<T1, T2, T3, T4> method, Action<T1, T2, T3, T4> stub) 
 		{ 
@@ -49,7 +59,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1, T2, T3, T4, T5> Stub<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> method, Action<T1, T2, T3, T4, T5> stub) 
 		{ 
@@ -57,7 +69,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1, T2, T3, T4, T5, T6> Stub<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6> method, Action<T1, T2, T3, T4, T5, T6> stub) 
 		{ 
@@ -65,7 +79,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1, T2, T3, T4, T5, T6, T7> Stub<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7> method, Action<T1, T2, T3, T4, T5, T6, T7> stub) 
 		{ 
@@ -73,7 +89,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public ActionCallHistory<T1, T2, T3, T4, T5, T6, T7, T8> Stub<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8> method, Action<T1, T2, T3, T4, T5, T6, T7, T8> stub) 
 		{ 
@@ -81,7 +99,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<TRet> Stub<TRet>(Func<TRet> method, Func<TRet> stub) 
 		{ 
@@ -89,7 +109,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, TRet> Stub<T1, TRet>(Func<T1, TRet> method, Func<T1, TRet> stub) 
 		{ 
@@ -97,7 +119,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, T2, TRet> Stub<T1, T2, TRet>(Func<T1, T2, TRet> method, Func<T1, T2, TRet> stub) 
 		{ 
@@ -105,7 +129,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, T2, T3, TRet> Stub<T1, T2, T3, TRet>(Func<T1, T2, T3, TRet> method, Func<T1, T2, T3, TRet> stub) 
 		{ 
@@ -113,7 +139,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, T2, T3, T4, TRet> Stub<T1, T2, T3, T4, TRet>(Func<T1, T2, T3, T4, TRet> method, Func<T1, T2, T3, T4, TRet> stub) 
 		{ 
@@ -121,7 +149,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, T2, T3, T4, T5, TRet> Stub<T1, T2, T3, T4, T5, TRet>(Func<T1, T2, T3, T4, T5, TRet> method, Func<T1, T2, T3, T4, T5, TRet> stub) 
 		{ 
@@ -129,7 +159,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, T2, T3, T4, T5, T6, TRet> Stub<T1, T2, T3, T4, T5, T6, TRet>(Func<T1, T2, T3, T4, T5, T6, TRet> method, Func<T1, T2, T3, T4, T5, T6, TRet> stub) 
 		{ 
@@ -137,7 +169,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, TRet> Stub<T1, T2, T3, T4, T5, T6, T7, TRet>(Func<T1, T2, T3, T4, T5, T6, T7, TRet> method, Func<T1, T2, T3, T4, T5, T6, T7, TRet> stub) 
 		{ 
@@ -145,7 +179,9 @@ namespace FakeThat
 		}
 		 
 		/// <summary>
-		/// Execute <paramref name="stub"/> when <paramref name="method"/> is called. <paramref name="method"/> must be a method of an object created with <see cref="Mock"/>.
+		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
 		/// </summary>
 		public FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, T8, TRet> Stub<T1, T2, T3, T4, T5, T6, T7, T8, TRet>(Func<T1, T2, T3, T4, T5, T6, T7, T8, TRet> method, Func<T1, T2, T3, T4, T5, T6, T7, T8, TRet> stub) 
 		{ 
