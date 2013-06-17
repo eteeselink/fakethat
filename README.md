@@ -141,60 +141,13 @@ Some design goals include:
 
 Please let me know if you think that I managed.
 
-OLD README BELOW
-================
-
-
-Features
---------
-
-  * Fully typechecked object mocking
-  * Use assertions and matchers from your favourite unit testing framework inside the methods of your mock object
-  * No reference manual; there are only two methods
-  * Works on .NET 3.5 and higher. Maybe also 2.0, but I haven't figured that out yet.
-  * Comfortably stays outside the "Mocks vs Stubs" discussion by using both terms in its two-word API, probably incorrectly.
-
-Rationale
----------
-I wrote Mug because other C# mocking libraries made my upper back itch, and that's a very difficult place to scratch. Here's what makes Mug different:
-
-### Delegates over fluent interfaces
-As you can see from the somewhat silly example above, Mug does not have any fancy "fluent object" syntax that allow you to check that a method has been called five times or that generate method logic for you. Mug also does not have an "Advanced Features" manual page that teach you how to use "amazing features that allow you to *make the return value depend on an argument!*". Making return values depend on arguments is exactly what they invented programming languages for, so let's use that!
-
-### Fully type checked
-Nevertheless, mocking with Mug is fully type checked; you cannot stub methods that don't exist, or write stubs that accept or return the wrong types. If you change the signature of a method that is mocked somewhere and don't update the tests accordingly, the tests will fail to compile. This is important, because it means that you get direct feedback from your environment while writing *and* maintaining your code.
-
-### Readable test code over fancy expectation matching
-I think that there is no additional value in using a mocking framework to count how often a method was called or to make assertions on the values that were passed. Unit testing frameworks are already very good at that, so why would I want to learn the slightly-different syntax of yet another framework that can do the same, but now in mocked objects? With Mug, instead of `verifyingThatAllExpectationsHaveBeenMet()`, you just assert in-place, you count the method calls yourself and afterwards assert that what you expected happened. This makes for readable tests that can be understood even by people entirely unfamiliar with Mug.
-
-### Truly simple
-The above example demonstrates all of Mug's features; there are no more. I have not yet found a use for more.
-
-FAQ
----
-
- - Can I redefine stubbed methods halfway my test?
- - That delegate syntax makes me feel like it's 2005 all over. Can I use lambda expressions?
- - Can I use this in commercial environments?
- - What's a 3-letter affirmative that starts with a "y"?
- 
-Todo
-----
-
- * Add support for mocking classes and not just interfaces
- * Add support for mocking properties and not just methods
- * Figure out whether Mug works on .NET 2.0 and why not
- * Ditto for Silverlight and for CLR languages other than C#
- * Brag about Mug on the interwebs
- 
-Help with any of the above (or any other help you think I might need) is much appreciated! I promise that I'll rewrite this page in first person plural upon significant contributions. Imagine the glory!
 
 Credits
 -------
 
-Mug was written by Egbert Teeselink. It uses the excellent <a href="http://www.castleproject.org/dynamicproxy/index.html">Castle DynamicProxy</a> to do all the hard object-generating work.
+Fake That was written by Egbert Teeselink. It uses the excellent <a href="http://www.castleproject.org/dynamicproxy/index.html">Castle DynamicProxy</a> to do all the hard object-generating work.
 
-Mug is released under the <a href="http://creativecommons.org/licenses/MIT/">MIT License</a>.
+Fake That is released under the <a href="http://creativecommons.org/licenses/MIT/">MIT License</a>.
 
-Thanks to Travis-CI for a free build server, and to [danlimerick](http://danlimerick.wordpress.com/2013/02/03/build-your-open-source-net-project-on-travis-ci/) 
+Thanks to [Travis CI]((https://travis-ci.org/eteeselink/fakethat) for a free build server, and to [danlimerick](http://danlimerick.wordpress.com/2013/02/03/build-your-open-source-net-project-on-travis-ci/) 
 for a guide on how to use it for (not officially supported) .NET/Mono code.
