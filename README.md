@@ -1,5 +1,5 @@
-Ridiculously simple mocking for .NET
-====================================
+Ridiculously simple mocking for C#
+==================================
 
 [![Build Status](https://travis-ci.org/eteeselink/fakethat.png)](https://travis-ci.org/eteeselink/fakethat)
 
