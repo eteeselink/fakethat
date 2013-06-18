@@ -23,7 +23,22 @@ namespace FakeThat
 		{ 
 			return RegisterStub(method, stub, new <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#>()); 
 		}
-		 
+
+		/// <summary>
+		/// Keep track of calls to `<paramref name="method"/>`. 
+		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
+		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
+        /// Call syntax: `fake.Stub&lt;string, int&gt;(fake.Object.ParseStr)`.
+		/// </summary>
+        /// <remarks>
+        /// Calling this method is equivalent to calling `Stub()`'s two-parameter overload, with
+        /// a dummy <#=overload.ClassName#> for the second argument.
+        /// </remarks>
+		public <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#> Stub<#=overload.TypeParamList#>(<#=overload.ClassName#><#=overload.TypeParamList#> method) 
+		{ 
+			return RegisterStub(method, null, new <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#>()); 
+		}
+
 <# } #>
 	}
 }

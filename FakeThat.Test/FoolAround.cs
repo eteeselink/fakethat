@@ -12,6 +12,8 @@ namespace FakeThat.Test
         public interface IHello
         {
             string Hello(string s);
+            void VoidMethod();
+            int Three { set; }
         }
 
 #if DEBUG
@@ -25,5 +27,16 @@ namespace FakeThat.Test
             Console.WriteLine(fake.Hello("q"));
         }
 #endif
+        public void Maa()
+        {
+            var fake = new Fake<IHello>();
+            fake.StubSetter<int>(v => fake.Object.Three = v);
+            var c = fake.Stub<string, string>(fake.Object.Hello);
+            var d = fake.Stub(fake.Object.VoidMethod);
+
+            fake.Object.Hello("a");
+            fake.Object.VoidMethod();
+            Console.WriteLine(d.CallCount);
+        }
     }
 }

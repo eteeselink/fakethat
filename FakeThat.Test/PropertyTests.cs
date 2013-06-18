@@ -54,5 +54,20 @@ namespace FakeThat.Test
 
             fake.StubSetter(i => { }, (int i) => { });
         }
+
+        [Test]
+        public void CanStubSetterWithNullDelegates()
+        {
+            var fake = new Fake<IPropertyInterface>();
+            var set = fake.StubSetter<int>(v => fake.Object.GetSet = v);
+
+            fake.Object.GetSet = 1;
+            set.Calls.Single().Value.ShouldBe(1);
+
+            var get = fake.StubGetter<int>(() => fake.Object.GetSet);
+
+            var q = fake.Object.GetSet;
+            get.Calls.Single().ReturnValue.ShouldBe(default(int));
+        }
     }
 }

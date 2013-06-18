@@ -109,13 +109,29 @@ namespace FakeThat
         /// Execute `onGet` when the property specified in `propertyLookupExpression` is called. For example,
         /// call `<code>fake.StubGetter(() => fake.Object.MyProperty, () => 5)</code>` to always return five.
         /// </summary>
+        /// <param name="propertyLookupExpression">Pass a lambda of the following form: <code>() => fake.Object.MyProperty</code>.</param>
+        /// <param name="onGet">Pass a lambda of the following form: <code>() => "hello"</code>.</param>
         public FuncCallHistory<TProp> StubGetter<TProp>(Expression<Func<TProp>> propertyLookupExpression, Func<TProp> onGet)
         {
             var lambda = PropertyLambda<TObj>.Create(propertyLookupExpression);
             var stubbedOperation = new FuncCallHistory<TProp>();
             interceptor.RegisterOperation(lambda.Getter, onGet, stubbedOperation);
             return stubbedOperation;
-        }       
+        }
+
+        /// <summary>
+        /// Keep track of calls to the property getter specified in `propertyLookupExpression`. Call syntax:
+        /// `<code>fake.StubGetter&lt;string&gt;(() => fake.Object.SomeProperty);</code>`
+        /// </summary>
+        /// <remarks>
+        /// Calling this method is equivalent to calling <see cref="StubGetter{TProp}(Expression{Func{TProp}}, Func{TProp})"/> 
+        /// with a dummy action for the second argument.
+        /// </remarks>
+        /// <param name="propertyLookupExpression">Pass a lambda of the following form: <code>() => fake.Object.MyProperty</code>.</param>
+        public FuncCallHistory<TProp> StubGetter<TProp>(Expression<Func<TProp>> propertyLookupExpression)
+        {
+            return StubGetter(propertyLookupExpression, null);
+        }
 
         /// <summary>
         /// Execute `onSet` when the property specified in `setterCall` is set. Call syntax:
@@ -131,6 +147,20 @@ namespace FakeThat
             interceptor.UnexpectSetter();
 
             return callHistory;
+        }
+
+        /// <summary>
+        /// Keep track of calls to the property setter specified in `setterCall`. Call syntax:
+        /// `<code>fake.StubSetter&lt;string&gt;(v => fake.Object.SomeProperty = v);</code>`
+        /// </summary>
+        /// <remarks>
+        /// Calling this method is equivalent to calling <see cref="StubSetter{TProp}(Action{FakeValue{TProp}}, Action{TProp})"/> 
+        /// with a dummy action for the second argument.
+        /// </remarks>
+        /// <param name="setterCall">Pass a lambda of the following form: <code>v => fake.Object.SomeProperty = v</code>.</param>
+        public SetterCallHistory<TProp> StubSetter<TProp>(Action<FakeValue<TProp>> setterCall)
+        {
+            return StubSetter(setterCall, null);
         }
 
         /// <summary>

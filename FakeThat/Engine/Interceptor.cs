@@ -29,8 +29,8 @@ namespace FakeThat.Engine
         /// </summary>
         public void RegisterOperation(MethodInfo method, Delegate instead, CallHistoryBase stubbedOperation)
         {
-            operations[method.ToString()] = new Operation() 
-            { 
+            operations[method.ToString()] = new Operation()
+            {
                 Delegate = instead,
                 CallHistory = stubbedOperation
             };
@@ -92,13 +92,23 @@ namespace FakeThat.Engine
             IEnumerable<object> arguments = invocation.Arguments;
             try
             {
-                object retval = operation.Delegate.DynamicInvoke(invocation.Arguments);
-                if (operation.Delegate.Method.ReturnType != typeof(void))
+                // only invoke our delegate if one was given.
+                object retval = null;
+                if (operation.Delegate != null)
                 {
-                    // prepend the return value to the argument list, as per StubbedOperationBase.AddCall's signature
-                    arguments = arguments.Concat(new[] { retval });                    
+                    retval = operation.Delegate.DynamicInvoke(invocation.Arguments);
                 }
-                
+
+                if (invocation.Method.ReturnType != typeof(void))
+                {
+                    if (operation.Delegate == null)
+                    {
+                        retval = GetDefault(invocation.Method.ReturnType);
+                    }
+                    // prepend the return value to the argument list, as per StubbedOperationBase.AddCall's signature
+                    arguments = arguments.Concat(new[] { retval });
+                }
+
                 invocation.ReturnValue = retval;
             }
             catch (System.Reflection.TargetInvocationException e)
@@ -107,6 +117,15 @@ namespace FakeThat.Engine
             }
 
             operation.CallHistory.RememberCall(arguments.ToArray());
+        }
+
+        private static object GetDefault(Type type)
+        {
+            if (type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            return null;
         }
     }
 }

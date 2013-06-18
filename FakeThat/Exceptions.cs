@@ -6,7 +6,7 @@ using System.Text;
 namespace FakeThat
 {
     /// <summary>
-    /// Thrown when a method on a faked object is called without it having been registered with <see cref="Fake{T}.Stub"/>.
+    /// Thrown when a method on a faked object is called without it having been registered with `Stub(..)`.
     /// </summary>
     public class MethodNotStubbedException : Exception
     {
@@ -14,7 +14,7 @@ namespace FakeThat
     }
 
     /// <summary>
-    /// Thrown when the body of the setter action passed to <see cref="Fake{T}.StubSetter"/> is
+    /// Thrown when the body of the setter action passed to `StubSetter(..)` is
     /// not actually a setter assignment.
     /// </summary>
     public class ThatsNotASetterException : Exception

@@ -117,5 +117,22 @@ namespace FakeThat.Test
 
             fake.Object.Func();
         }
+
+        [Test]
+        public void CanStubWithNullDelegates()
+        {
+            var fake = new Fake<IBoringInterface>();
+            //fake.StubSetter<int>(v => fake.Object.Three = v);
+            var func = fake.Stub<string, int>(fake.Object.Func);
+            var action = fake.Stub(fake.Object.Action);
+
+            fake.Object.Func("a");
+            func.CallCount.ShouldBe(1);
+            func.Calls.Single().Arg1.ShouldBe("a");
+            func.Calls.Single().ReturnValue.ShouldBe(default(int));
+
+            fake.Object.Action();
+            action.CallCount.ShouldBe(1);
+        }
     }
 }
