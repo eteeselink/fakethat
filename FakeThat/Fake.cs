@@ -64,20 +64,20 @@ namespace FakeThat
         /// <summary>
         /// Create a new fake object. Access the underlying object itself through <see cref="Fake{TObj}.Object"/>.
         /// </summary>
-        /// <param name="autoStub">
+        /// <param name="acceptUnstubbedCalls">
         /// If true, any unstubbed methods are given do-nothing implementations. Otherwise,
         /// calling an unstubbed method results in an exception.
         /// </param>
-        public Fake(bool autoStub)
-            : this(autoStub, null)
+        public Fake(bool acceptUnstubbedCalls)
+            : this(acceptUnstubbedCalls, null)
         { }
 
         /// <summary>
         /// Create a new fake object. Access the underlying object itself through `Fake{TObj}.Object`.
-        /// Calling an unstubbed method results in an exception. Use <see cref="Fake{TObj}.Fake(bool)"/> to change this behaviour.
+        /// Calling an unstubbed method or property is silently allowed. Use <see cref="Fake{TObj}.Fake(bool)"/> to change this behaviour.
         /// </summary>
         public Fake()
-            : this(false)
+            : this(true)
         { }
 
         /// <summary>
