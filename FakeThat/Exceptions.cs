@@ -14,7 +14,7 @@ namespace FakeThat
     }
 
     /// <summary>
-    /// Thrown when the body of the setter action passed to <see cref="Fake.StubSetter"/> is
+    /// Thrown when the body of the setter action passed to <see cref="Fake{T}.StubSetter"/> is
     /// not actually a setter assignment.
     /// </summary>
     public class ThatsNotASetterException : Exception

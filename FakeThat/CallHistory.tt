@@ -11,11 +11,21 @@ using System.Text;
 namespace FakeThat
 {
 <# foreach(var overload in overloads) { #>
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#> : CallHistoryBase<<#=overload.ClassName#>CallHistory<#=overload.TypeParamList#>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments<# if(overload.IsFunc) { #>and whatever the stub returned<# } #>.
+        /// </summary>
         public struct Call
         {
 <# foreach(var field in overload.Fields) { #>
+            /// <summary>
+            /// <# if(field.TypeName == "TRet") { #>The value that the stubbed method/property returned to the software under test<# } else { #>The <#=Ordinal(field.Index)#> argument that the software under test called this stubbed method/property with.<# } #>
+
+            /// </summary>
             public readonly <#=field.AsField#>;
 <# } #>
 <# if(overload.Fields.Any()) { #>

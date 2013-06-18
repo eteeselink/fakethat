@@ -9,6 +9,9 @@ using System.Collections.Concurrent;
 
 namespace FakeThat
 {
+    /// <summary>
+    /// Base class for all fake object wrappers.
+    /// </summary>
     public abstract class Fake
     {
         /// <summary>
@@ -63,6 +66,9 @@ namespace FakeThat
     }
 #endif
 
+    /// <summary>
+    /// Encapsulates a fake object of type `TObj`. Use <see cref="Object"/> to obtain the actual fake object.
+    /// </summary>
     public partial class Fake<TObj> : Fake 
         where TObj : class
     {

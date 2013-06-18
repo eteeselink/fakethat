@@ -5,8 +5,14 @@ using System.Text;
 
 namespace FakeThat
 {
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory : CallHistoryBase<ActionCallHistory.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
         }
@@ -22,10 +28,19 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1> : CallHistoryBase<ActionCallHistory<T1>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
             internal Call(T1 arg1)
             {
@@ -44,11 +59,23 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1, T2> : CallHistoryBase<ActionCallHistory<T1, T2>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
             internal Call(T1 arg1, T2 arg2)
             {
@@ -68,12 +95,27 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1, T2, T3> : CallHistoryBase<ActionCallHistory<T1, T2, T3>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
             internal Call(T1 arg1, T2 arg2, T3 arg3)
             {
@@ -94,13 +136,31 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
             {
@@ -122,14 +182,35 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
             {
@@ -152,15 +233,39 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5, T6> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
+            /// <summary>
+            /// The 6th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T6 Arg6;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
             {
@@ -184,16 +289,43 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5, T6, T7> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6, T7>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
+            /// <summary>
+            /// The 6th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T6 Arg6;
+            /// <summary>
+            /// The 7th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T7 Arg7;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)
             {
@@ -218,17 +350,47 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5, T6, T7, T8> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6, T7, T8>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to arguments.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
+            /// <summary>
+            /// The 6th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T6 Arg6;
+            /// <summary>
+            /// The 7th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T7 Arg7;
+            /// <summary>
+            /// The 8th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T8 Arg8;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)
             {
@@ -254,10 +416,19 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<TRet> : CallHistoryBase<FuncCallHistory<TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(TRet returnvalue)
             {
@@ -276,11 +447,23 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, TRet> : CallHistoryBase<FuncCallHistory<T1, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, TRet returnvalue)
             {
@@ -300,12 +483,27 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, T2, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, T2 arg2, TRet returnvalue)
             {
@@ -326,13 +524,31 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, T2, T3, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, T2 arg2, T3 arg3, TRet returnvalue)
             {
@@ -354,14 +570,35 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, TRet returnvalue)
             {
@@ -384,15 +621,39 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, TRet returnvalue)
             {
@@ -416,16 +677,43 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, T6, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
+            /// <summary>
+            /// The 6th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T6 Arg6;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, TRet returnvalue)
             {
@@ -450,17 +738,47 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
+            /// <summary>
+            /// The 6th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T6 Arg6;
+            /// <summary>
+            /// The 7th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T7 Arg7;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, TRet returnvalue)
             {
@@ -486,18 +804,51 @@ namespace FakeThat
             calls.Add(call);
         } 
     }
+    /// <summary>
+    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, T8, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, T8, TRet>.Call>
     {
+        /// <summary>
+        /// Data related to a single call made to a stubbed method or property. Gives strongly-typed access to argumentsand whatever the stub returned.
+        /// </summary>
         public struct Call
         {
+            /// <summary>
+            /// The 1st argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T1 Arg1;
+            /// <summary>
+            /// The 2nd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T2 Arg2;
+            /// <summary>
+            /// The 3rd argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T3 Arg3;
+            /// <summary>
+            /// The 4th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T4 Arg4;
+            /// <summary>
+            /// The 5th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T5 Arg5;
+            /// <summary>
+            /// The 6th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T6 Arg6;
+            /// <summary>
+            /// The 7th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T7 Arg7;
+            /// <summary>
+            /// The 8th argument that the software under test called this stubbed method/property with.
+            /// </summary>
             public readonly T8 Arg8;
+            /// <summary>
+            /// The value that the stubbed method/property returned to the software under test
+            /// </summary>
             public readonly TRet ReturnValue;
             internal Call(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8, TRet returnvalue)
             {

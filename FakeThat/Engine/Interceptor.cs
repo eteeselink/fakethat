@@ -24,8 +24,6 @@ namespace FakeThat.Engine
         /// Register <paramref name="instead"/> to be executed when <paramref name="method"/> is called.
         /// Uses MethodInfo.ToString(), which uniquely identifies any possible signature.
         /// </summary>
-        /// <param name="method"></param>
-        /// <param name="instead"></param>
         public void RegisterOperation(MethodInfo method, Delegate instead, CallHistoryBase stubbedOperation)
         {
             operations[method.ToString()] = new Operation() 
