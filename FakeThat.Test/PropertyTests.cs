@@ -41,7 +41,7 @@ namespace FakeThat.Test
 
             latestValue.ShouldBe(6);
             setterHistory.CallCount.ShouldBe(1);
-            setterHistory.Calls.Single().Arg1.ShouldBe(6);
+            setterHistory.Calls.Single().Value.ShouldBe(6);
         }
 
         [Test]

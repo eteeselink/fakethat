@@ -34,6 +34,7 @@ namespace FakeThat
             fakes.TryAdd(fake.Object, new WeakReference(fake));
         }
 #endif
+
     }
 
 #if DEBUG
@@ -68,15 +69,8 @@ namespace FakeThat
         /// calling an unstubbed method results in an exception.
         /// </param>
         public Fake(bool autoStub)
-        {
-            var gen = new Castle.DynamicProxy.ProxyGenerator();
-            interceptor = new Interceptor();
-
-            Object = gen.CreateInterfaceProxyWithoutTarget<TObj>(interceptor);
-#if DEBUG
-            Remember(this);
-#endif
-        }
+            : this(autoStub, null)
+        { }
 
         /// <summary>
         /// Create a new fake object. Access the underlying object itself through `Fake{TObj}.Object`.
@@ -85,6 +79,25 @@ namespace FakeThat
         public Fake()
             : this(false)
         { }
+
+        /// <summary>
+        /// The real constructor is private because C# won't run the static constructor (which loads Castle.Core)
+        /// before trying to at least somewhat interpret this method body, which contains a Castle reference.
+        /// 
+        /// By making sure that all public constructors are indirected to a "real" method body by one step, assembly
+        /// loading appears to work.
+        /// </summary>
+        private Fake(bool autoStub, object dummy)
+        {
+            var gen = new Castle.DynamicProxy.ProxyGenerator();
+            interceptor = new Interceptor(autoStub);
+
+            Object = gen.CreateInterfaceProxyWithoutTarget<TObj>(interceptor);
+#if DEBUG
+            Remember(this);
+#endif
+        }
+
 
         private T RegisterStub<T>(Delegate methodDelegate, Delegate instead, T stubbedOperation) where T : CallHistoryBase
         {
@@ -110,9 +123,9 @@ namespace FakeThat
         /// </summary>
         /// <param name="setterCall">Pass a lambda of the following form: <code>v => fake.Object.SomeProperty = v</code>.</param>
         /// <param name="onSet">The action to perform whenever the property is set</param>
-        public ActionCallHistory<TProp> StubSetter<TProp>(Action<FakeValue<TProp>> setterCall, Action<TProp> onSet)
+        public SetterCallHistory<TProp> StubSetter<TProp>(Action<FakeValue<TProp>> setterCall, Action<TProp> onSet)
         {
-            var callHistory = new ActionCallHistory<TProp>();
+            var callHistory = new SetterCallHistory<TProp>();
             interceptor.ExpectSetter(onSet, callHistory);
             setterCall(new FakeValue<TProp>());
             interceptor.UnexpectSetter();
@@ -129,7 +142,7 @@ namespace FakeThat
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
                 String resourceName = typeof(Fake).Namespace + "." +
-                   new AssemblyName(args.Name).Name + ".dll";
+                    new AssemblyName(args.Name).Name + ".dll";
 
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
                 {

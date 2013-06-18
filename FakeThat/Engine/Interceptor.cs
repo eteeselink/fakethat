@@ -14,10 +14,13 @@ namespace FakeThat.Engine
             public CallHistoryBase CallHistory;
         }
 
+        private readonly bool acceptUnstubbedCalls;
+
         private Dictionary<string, Operation> operations = new Dictionary<string, Operation>();
 
-        public Interceptor()
+        public Interceptor(bool acceptUnstubbedCalls)
         {
+            this.acceptUnstubbedCalls = acceptUnstubbedCalls;
         }
 
         /// <summary>
@@ -57,18 +60,24 @@ namespace FakeThat.Engine
         {
             // find registered operation, and invoke it if possible.
             string methodSignature = invocation.Method.ToString();
+            // if expectedSetterOperation isn't null, it means that Fake.StubSetter was just called
+            if (expectedSetterOperation != null)
+            {
+                const string prefix = "Void set_";
+                if (!methodSignature.StartsWith(prefix))
+                {
+                    throw new ThatsNotASetterException();
+                }
+                RegisterOperation(invocation.Method, expectedSetterOperation.Delegate, expectedSetterOperation.CallHistory);
+                expectedSetterOperation = null;
+                return;
+            }
             if (!operations.ContainsKey(methodSignature))
             {
-                // if expectedSetterOperation isn't null, it means that Fake.StubSetter was just called
-                if (expectedSetterOperation != null)
+                if (acceptUnstubbedCalls)
                 {
-                    const string prefix = "Void set_";
-                    if (!methodSignature.StartsWith(prefix))
-                    {
-                        throw new ThatsNotASetterException();
-                    }
-                    RegisterOperation(invocation.Method, expectedSetterOperation.Delegate, expectedSetterOperation.CallHistory);
-                    expectedSetterOperation = null;
+                    // allow DynamicProxy to simply pass the call, returning a default return value, if applicable.
+                    // we don't keep track of the call history of unstubbed methods.
                     return;
                 }
                 else

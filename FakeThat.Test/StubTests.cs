@@ -99,5 +99,23 @@ namespace FakeThat.Test
             calls[2].Arg1.ShouldBe(3);
             calls[2].Arg2.ShouldBe("3");
         }
+
+        [Test]
+        public void UnstubbedMethodsCanBeCalledIfSoRequested()
+        {
+            var fake = new Fake<IBoringInterface>(true);
+
+            fake.Object.Func().ShouldBe(null);
+        }
+
+
+        [Test]
+        [ExpectedException(typeof(MethodNotStubbedException))]
+        public void UnstubbedMethodsCannotBeCalled()
+        {
+            var fake = new Fake<IBoringInterface>();
+
+            fake.Object.Func();
+        }
     }
 }
