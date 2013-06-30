@@ -7,6 +7,7 @@ using FakeThat.Engine;
 using System.Linq.Expressions;
 using System.Collections.Concurrent;
 using FakeThat.Calls;
+using FakeThat.Extras;
 
 namespace FakeThat
 {

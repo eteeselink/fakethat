@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using FakeThat.Calls;
+using FakeThat.Extras;
 
 namespace FakeThat.Engine
 {

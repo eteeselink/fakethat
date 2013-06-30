@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FakeThat
+namespace FakeThat.Extras
 {
     /// <summary>
     /// Thrown when a method on a faked object is called without it having been registered with `Stub(..)`.

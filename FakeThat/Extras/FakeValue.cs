@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FakeThat
+namespace FakeThat.Extras
 {
     /// <summary>
     /// A marker class, used in `Fake.StubSetter`. Assign a value of this

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Shouldly;
+using FakeThat.Extras;
 
 namespace FakeThat.Test
 {

@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\IdentityEqualityComparer.cs" />
-    <Compile Include="Exceptions.cs" />
+    <Compile Include="Extras\Exceptions.cs" />
     <Compile Include="Engine\PropertyLambda.cs" />
     <Compile Include="Fake.cs" />
     <Compile Include="Engine\Interceptor.cs" />
@@ -58,7 +58,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="FakeValue.cs" />
+    <Compile Include="Extras\FakeValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Calls\CallHistory.cs">
       <AutoGen>True</AutoGen>
