@@ -110,9 +110,13 @@ Installation
 
 ### Getting the binaries
 
-Currently: Compile from source with a single `xbuild FakeThat.sln` on the command line (install Mono first).
-The resulting FakeThat.dll will work on both Mono and .NET.
-`FakeThat.sln` is a Visual Studio 2010 solution, and I expect that it also works in MonoDevelop.
+Currently: Compile from source. On the command line, do:
+* `xbuild FakeThat.sln` (Mono)
+* `msbuild FakeThat.sln` (.NET)
+
+Alternatively, open the solution in your favourite IDE. `FakeThat.sln` is a Visual Studio 2010 solution, and I expect that it also works in MonoDevelop.
+
+The resulting `FakeThat.dll` will work on both Mono and .NET.
 
 TODO:
 * Download binaries
