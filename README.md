@@ -20,8 +20,8 @@ vader.GetAngry();
 shootCalls.Count.ShouldBe(2);
 
 // We have full access to the call history.
-shootCalls.First().Arg1.Name.ShouldBe("Alderaan");
-shootCalls.First().ReturnValue.ShouldContain("Haha,");
+shootCalls[0].Arg1.Name.ShouldBe("Alderaan");
+shootCalls[0].ReturnValue.ShouldContain("Haha,");
 shootCalls.Last().Arg1.Name.ShouldBe("Naboo");
 ```
 <sup>Fancy `Should*` assertion methods courtesy of the excellent [Shouldly](http://shouldly.github.io/) library. Note that you don't at all need Shouldly to use Fake That.</sup>

@@ -60,8 +60,8 @@ namespace FakeThat.Test
             shootCalls.Count.ShouldBe(2);
 
             // We have full access to the call history.
-            shootCalls.First().Arg1.Name.ShouldBe("Alderaan");
-            shootCalls.First().ReturnValue.ShouldContain("Haha,");
+            shootCalls[0].Arg1.Name.ShouldBe("Alderaan");
+            shootCalls[0].ReturnValue.ShouldContain("Haha,");
             shootCalls.Last().Arg1.Name.ShouldBe("Naboo");
         }
 
