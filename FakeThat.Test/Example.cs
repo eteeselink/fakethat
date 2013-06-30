@@ -48,7 +48,7 @@ namespace FakeThat.Test
             var fakeStar = new Fake<IDeathStar>();
 
             // Set up the fake so that a call to Shoot(Planet) always misses
-            var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
+            var shootCalls = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
 
             // give the fake Death Star to a real Vader (the class we wish to test)
             var vader = new Vader(fakeStar.Object);
@@ -57,12 +57,12 @@ namespace FakeThat.Test
             // Check whether our stubbed method was indeed called. We can use plain LINQ and
             // any preferred unit testing / assertion library. No need to learn any special 
             // mocking-framework assertion/verification syntax.
-            shoot.CallCount.ShouldBe(2);
+            shootCalls.Count.ShouldBe(2);
 
             // We have full access to the call history.
-            shoot.Calls.First().Arg1.Name.ShouldBe("Alderaan");
-            shoot.Calls.First().ReturnValue.ShouldContain("Haha,");
-            shoot.Calls.Last().Arg1.Name.ShouldBe("Naboo");
+            shootCalls.First().Arg1.Name.ShouldBe("Alderaan");
+            shootCalls.First().ReturnValue.ShouldContain("Haha,");
+            shootCalls.Last().Arg1.Name.ShouldBe("Naboo");
         }
 
         [Test]

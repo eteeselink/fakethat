@@ -36,7 +36,7 @@ namespace FakeThat.Test
 
             fake.Object.Hello("a");
             fake.Object.VoidMethod();
-            Console.WriteLine(d.CallCount);
+            Console.WriteLine(d.Count);
         }
     }
 }

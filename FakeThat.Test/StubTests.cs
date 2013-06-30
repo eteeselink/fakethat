@@ -62,20 +62,19 @@ namespace FakeThat.Test
             var fake = new Fake<IBoringInterface>();
             var obj = fake.Object;
 
-            var action = fake.Stub(obj.Action, (int i, string s) => { v++; });
+            var actionCalls = fake.Stub(obj.Action, (int i, string s) => { v++; });
             obj.Action(1, "1");
             obj.Action(2, "2");
             obj.Action(3, "3");
 
-            action.CallCount.ShouldBe(3);
-            action.Calls.Count().ShouldBe(3);
-            var calls = action.Calls.ToArray();
-            calls[0].Arg1.ShouldBe(1);
-            calls[0].Arg2.ShouldBe("1");
-            calls[1].Arg1.ShouldBe(2);
-            calls[1].Arg2.ShouldBe("2");
-            calls[2].Arg1.ShouldBe(3);
-            calls[2].Arg2.ShouldBe("3");
+            actionCalls.Count.ShouldBe(3);
+            actionCalls.Count().ShouldBe(3);
+            actionCalls[0].Arg1.ShouldBe(1);
+            actionCalls[0].Arg2.ShouldBe("1");
+            actionCalls[1].Arg1.ShouldBe(2);
+            actionCalls[1].Arg2.ShouldBe("2");
+            actionCalls[2].Arg1.ShouldBe(3);
+            actionCalls[2].Arg2.ShouldBe("3");
         }
 
         [Test]
@@ -85,20 +84,18 @@ namespace FakeThat.Test
             var fake = new Fake<IBoringInterface>();
             var obj = fake.Object;
 
-            var action = fake.Stub(obj.Func, (int i, string s) => v++.ToString());
+            var actionCalls = fake.Stub(obj.Func, (int i, string s) => v++.ToString());
             obj.Func(1, "1");
             obj.Func(2, "2");
             obj.Func(3, "3");
 
-            action.CallCount.ShouldBe(3);
-            action.Calls.Count().ShouldBe(3);
-            var calls = action.Calls.ToArray();
-            calls[0].Arg1.ShouldBe(1);
-            calls[0].Arg2.ShouldBe("1");
-            calls[1].Arg1.ShouldBe(2);
-            calls[1].Arg2.ShouldBe("2");
-            calls[2].Arg1.ShouldBe(3);
-            calls[2].Arg2.ShouldBe("3");
+            actionCalls.Count.ShouldBe(3);
+            actionCalls[0].Arg1.ShouldBe(1);
+            actionCalls[0].Arg2.ShouldBe("1");
+            actionCalls[1].Arg1.ShouldBe(2);
+            actionCalls[1].Arg2.ShouldBe("2");
+            actionCalls[2].Arg1.ShouldBe(3);
+            actionCalls[2].Arg2.ShouldBe("3");
         }
 
         [Test]
@@ -123,17 +120,16 @@ namespace FakeThat.Test
         public void CanStubWithNullDelegates()
         {
             var fake = new Fake<IBoringInterface>();
-            //fake.StubSetter<int>(v => fake.Object.Three = v);
-            var func = fake.Stub<string, int>(fake.Object.Func);
-            var action = fake.Stub(fake.Object.Action);
+            var funcCalls = fake.Stub<string, int>(fake.Object.Func);
+            var actionCalls = fake.Stub(fake.Object.Action);
 
             fake.Object.Func("a");
-            func.CallCount.ShouldBe(1);
-            func.Calls.Single().Arg1.ShouldBe("a");
-            func.Calls.Single().ReturnValue.ShouldBe(default(int));
+            funcCalls.Count.ShouldBe(1);
+            funcCalls.Single().Arg1.ShouldBe("a");
+            funcCalls.Single().ReturnValue.ShouldBe(default(int));
 
             fake.Object.Action();
-            action.CallCount.ShouldBe(1);
+            actionCalls.Count.ShouldBe(1);
         }
     }
 }

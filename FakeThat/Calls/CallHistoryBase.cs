@@ -34,22 +34,25 @@ namespace FakeThat.Calls
     /// <summary>
     /// Base class for all call history objects. Only used internally.
     /// </summary>
-    public abstract class CallHistoryBase<TCall> : CallHistoryBase //, IEnumerable<TCall>
+    public abstract class CallHistoryBase<TCall> : CallHistoryBase, IEnumerable<TCall>
     {
         internal readonly List<TCall> calls;
 
         /// <summary>
-        /// A history of all calls made to this method/property up until now. 
-        /// Clear the history with <see cref="ForgetCalls"/>.
-        /// The call history is plain old (immutable) C# data. You can query it with LINQ,
-        /// copy it around, do with it whatever pleases you.
+        /// Gets the number of calls recorded up until now.
         /// </summary>
-        public IEnumerable<TCall> Calls { get { return calls; } }
+        public int Count { get { return calls.Count; } }
 
         /// <summary>
-        /// Shortcut property for `Calls.Count()`.
+        /// Get the `index`th call made since the fake object was created.
         /// </summary>
-        public int CallCount { get { return calls.Count; } }
+        public TCall this[int index]
+        {
+            get
+            {
+                return calls[index];
+            }
+        }
 
         internal CallHistoryBase()
         {
@@ -62,6 +65,22 @@ namespace FakeThat.Calls
         public void ForgetCalls()
         {
             calls.Clear();
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the call history.
+        /// </summary>
+        public IEnumerator<TCall> GetEnumerator()
+        {
+            return calls.GetEnumerator();
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the call history.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return calls.GetEnumerator();
         }
     }
 }

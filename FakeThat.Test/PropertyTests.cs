@@ -25,8 +25,8 @@ namespace FakeThat.Test
             obj.GetSet.ShouldBe(3);
             v.ShouldBe(4);
 
-            getter.CallCount.ShouldBe(4);
-            getter.Calls.Last().ReturnValue.ShouldBe(3);
+            getter.Count.ShouldBe(4);
+            getter.Last().ReturnValue.ShouldBe(3);
         }
 
         [Test]
@@ -37,12 +37,12 @@ namespace FakeThat.Test
 
             int latestValue = 0;
 
-            var setterHistory = fake.StubSetter(i => obj.GetSet = i, (int i) => latestValue = i);
+            var setterCalls = fake.StubSetter(i => obj.GetSet = i, (int i) => latestValue = i);
             obj.GetSet = 6;
 
             latestValue.ShouldBe(6);
-            setterHistory.CallCount.ShouldBe(1);
-            setterHistory.Calls.Single().Value.ShouldBe(6);
+            setterCalls.Count.ShouldBe(1);
+            setterCalls.Single().Value.ShouldBe(6);
         }
 
         [Test]
@@ -60,15 +60,15 @@ namespace FakeThat.Test
         public void CanStubSetterWithNullDelegates()
         {
             var fake = new Fake<IPropertyInterface>();
-            var set = fake.StubSetter<int>(v => fake.Object.GetSet = v);
+            var setCalls = fake.StubSetter<int>(v => fake.Object.GetSet = v);
 
             fake.Object.GetSet = 1;
-            set.Calls.Single().Value.ShouldBe(1);
+            setCalls.Single().Value.ShouldBe(1);
 
-            var get = fake.StubGetter<int>(() => fake.Object.GetSet);
+            var getCalls = fake.StubGetter<int>(() => fake.Object.GetSet);
 
             var q = fake.Object.GetSet;
-            get.Calls.Single().ReturnValue.ShouldBe(default(int));
+            getCalls.Single().ReturnValue.ShouldBe(default(int));
         }
     }
 }
