@@ -12,48 +12,9 @@ using FakeThat.Extras;
 namespace FakeThat
 {
     /// <summary>
-    /// Base class for all fake object wrappers.
-    /// </summary>
-    public abstract class Fake
-    {
-
-#if DEBUG
-        private static ConcurrentDictionary<object, WeakReference> fakes = new ConcurrentDictionary<object, WeakReference>(new IdentityEqualityComparer<object>());
-
-        public static T New<T>() where T : class
-        {
-            var fake = new Fake<T>();
-            return fake.Object;
-        }
-
-        internal static Fake<T> Get<T>(T obj) where T : class
-        {
-            return (Fake<T>)fakes[obj].Target;
-        }
-
-        protected void Remember<T>(Fake<T> fake) where T : class
-        {
-            fakes.TryAdd(fake.Object, new WeakReference(fake));
-        }
-#endif
-
-    }
-
-#if DEBUG
-    public static class FakeExtensions
-    {
-        public static FuncCallHistory<T1, TRet> Stub<TObj, T1, TRet>(this TObj obj, Func<T1, TRet> method, Func<T1, TRet> stub) where TObj : class
-        {
-            var fake = Fake.Get<TObj>(obj);
-            return fake.Stub(method, stub);
-        }
-    }
-#endif
-
-    /// <summary>
     /// Encapsulates a fake object of type `TObj`. Use <see cref="Object"/> to obtain the actual fake object.
     /// </summary>
-    public partial class Fake<TObj> : Fake 
+    public partial class Fake<TObj> 
         where TObj : class
     {
         private readonly Interceptor interceptor;
@@ -95,9 +56,6 @@ namespace FakeThat
             interceptor = new Interceptor(autoStub);
 
             Object = gen.CreateInterfaceProxyWithoutTarget<TObj>(interceptor);
-#if DEBUG
-            Remember(this);
-#endif
         }
 
 

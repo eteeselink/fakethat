@@ -6,7 +6,7 @@ using FakeThat.Calls;
 
 namespace FakeThat
 {
-    public partial class Fake<TObj> : Fake 
+    public partial class Fake<TObj> 
         where TObj : class
     {
 		/// <summary>
