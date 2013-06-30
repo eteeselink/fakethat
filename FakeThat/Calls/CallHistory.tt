@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FakeThat
+namespace FakeThat.Calls
 {
 <# foreach(var overload in overloads) { #>
     /// <summary>
@@ -52,4 +52,4 @@ namespace FakeThat
 <# } #>
 }
 
-<#@ include file="Overload.ttinclude" #>
+<#@ include file="../Overload.ttinclude" #>

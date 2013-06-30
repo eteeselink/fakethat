@@ -103,7 +103,7 @@ namespace FakeThat.Test
         [Test]
         public void UnstubbedMethodsCanBeCalledIfSoRequested()
         {
-            var fake = new Fake<IBoringInterface>(true);
+            var fake = new Fake<IBoringInterface>();
 
             fake.Object.Func().ShouldBe(null);
         }
@@ -113,7 +113,7 @@ namespace FakeThat.Test
         [ExpectedException(typeof(MethodNotStubbedException))]
         public void UnstubbedMethodsCannotBeCalled()
         {
-            var fake = new Fake<IBoringInterface>();
+            var fake = new Fake<IBoringInterface>(false);
 
             fake.Object.Func();
         }

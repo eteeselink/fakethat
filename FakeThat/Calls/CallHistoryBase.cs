@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FakeThat
+namespace FakeThat.Calls
 {
     /// <summary>
     /// Base class for all call history objects. Only used internally.
@@ -34,7 +34,7 @@ namespace FakeThat
     /// <summary>
     /// Base class for all call history objects. Only used internally.
     /// </summary>
-    public abstract class CallHistoryBase<TCall> : CallHistoryBase
+    public abstract class CallHistoryBase<TCall> : CallHistoryBase //, IEnumerable<TCall>
     {
         internal readonly List<TCall> calls;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FakeThat
+namespace FakeThat.Calls
 {
     /// <summary>
     /// Stores a history of all calls made to a certain method or property on a fake object.
