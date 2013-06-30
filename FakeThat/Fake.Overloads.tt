@@ -19,6 +19,9 @@ namespace FakeThat
 		/// Execute `<paramref name="stub"/>` when `<paramref name="method"/>` is called. 
 		/// `<paramref name="method"/>` must be a method of `<i>this</i>.Object`. 
 		/// Returns `CallHistory` object that keeps track of all calls made to the stubbed method.
+		/// `CallHistory` implements IEnumerable, so you can use familiar LINQ methods to query the 
+		/// call history. Each element of the call history has access to the arguments passed and, if
+		/// applicable, the value that the stubbed method returned.
 		/// </summary>
 		public <#=overload.ClassName#>CallHistory<#=overload.TypeParamList#> Stub<#=overload.TypeParamList#>(<#=overload.ClassName#><#=overload.TypeParamList#> method, <#=overload.ClassName#><#=overload.TypeParamList#> stub) 
 		{ 
