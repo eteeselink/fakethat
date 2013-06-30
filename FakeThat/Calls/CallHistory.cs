@@ -6,7 +6,8 @@ using System.Text;
 namespace FakeThat.Calls
 {
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory : CallHistoryBase<ActionCallHistory.Call>
     {
@@ -29,7 +30,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1> : CallHistoryBase<ActionCallHistory<T1>.Call>
     {
@@ -60,7 +62,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1, T2> : CallHistoryBase<ActionCallHistory<T1, T2>.Call>
     {
@@ -96,7 +99,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1, T2, T3> : CallHistoryBase<ActionCallHistory<T1, T2, T3>.Call>
     {
@@ -137,7 +141,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4>.Call>
     {
@@ -183,7 +188,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5>.Call>
     {
@@ -234,7 +240,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5, T6> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6>.Call>
     {
@@ -290,7 +297,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5, T6, T7> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6, T7>.Call>
     {
@@ -351,7 +359,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class ActionCallHistory<T1, T2, T3, T4, T5, T6, T7, T8> : CallHistoryBase<ActionCallHistory<T1, T2, T3, T4, T5, T6, T7, T8>.Call>
     {
@@ -417,7 +426,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<TRet> : CallHistoryBase<FuncCallHistory<TRet>.Call>
     {
@@ -448,7 +458,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, TRet> : CallHistoryBase<FuncCallHistory<T1, TRet>.Call>
     {
@@ -484,7 +495,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, T2, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, TRet>.Call>
     {
@@ -525,7 +537,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, T2, T3, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, TRet>.Call>
     {
@@ -571,7 +584,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, TRet>.Call>
     {
@@ -622,7 +636,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, TRet>.Call>
     {
@@ -678,7 +693,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, T6, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, TRet>.Call>
     {
@@ -739,7 +755,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, TRet>.Call>
     {
@@ -805,7 +822,8 @@ namespace FakeThat.Calls
         } 
     }
     /// <summary>
-    /// Stores a history of all calls made to a certain method or property on a fake object.
+    /// Stores a history of all calls made to a certain method or property on a fake object. The call history
+	/// cannot be changed, but it can be cleared by calling <see cref="CallHistoryBase.ForgetCalls"/>.
     /// </summary>
     public class FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, T8, TRet> : CallHistoryBase<FuncCallHistory<T1, T2, T3, T4, T5, T6, T7, T8, TRet>.Call>
     {

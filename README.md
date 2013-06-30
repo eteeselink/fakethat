@@ -8,21 +8,21 @@ Ridiculously simple mocking for C#
 var fakeStar = new Fake<IDeathStar>();
 
 // Set up the fake so that a call to Shoot(Planet) always misses
-var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
+var shootCalls = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
 
 // give the fake Death Star to a real Vader (the class we wish to test)
 var vader = new Vader(fakeStar.Object);
 vader.GetAngry();
 
-// Check whether our stubbed method was indeed called. We can use any 
-// preferred unit testing / assertion library. No need to learn any special 
-// mocking-framework verification syntax.
-shoot.CallCount.ShouldBe(2);
+// Check whether our stubbed method was indeed called. We can use plain LINQ and
+// any preferred unit testing / assertion library. No need to learn any special 
+// mocking-framework assertion/verification syntax.
+shootCalls.Count.ShouldBe(2);
 
-// We have full access to the call history using familiar LINQ operators.
-shoot.Calls.First().Arg1.Name.ShouldBe("Alderaan");
-shoot.Calls.First().ReturnValue.ShouldContain("Haha,");
-shoot.Calls.Last().Arg1.Name.ShouldBe("Naboo");
+// We have full access to the call history.
+shootCalls.First().Arg1.Name.ShouldBe("Alderaan");
+shootCalls.First().ReturnValue.ShouldContain("Haha,");
+shootCalls.Last().Arg1.Name.ShouldBe("Naboo");
 ```
 <sup>Fancy `Should*` assertion methods courtesy of the excellent [Shouldly](http://shouldly.github.io/) library. Note that you don't at all need Shouldly to use Fake That.</sup>
 
@@ -50,7 +50,7 @@ In Fake That, you do this in a lambda expression that contains plain old C# code
 ``` c#
 var fakeStar = new Fake<IDeathStar>();
 
-var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) =>
+var shootCalls = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) =>
 {
     // Validate arguments using normal C# code
     planet.ShouldNotBe(null);
@@ -69,11 +69,11 @@ This is because C# can't figure out which overload of `Shoot` you want to stub w
 Every `Stub` call returns a `CallHistory` object with an IEnumerable `Calls` property.
 
 ``` c#
-var shoot = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
+var shootCalls = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) => "Haha, missed!");
 
 // .. call code that would call fakeStar.Object.Shoot()
 
-shoot.Calls
+shootCalls
 	.Where(call => call.Arg1 == "Alderaan")
 	.All(call => call.ReturnValue.Contains("Haha,")
 	.ShouldBe(true);
@@ -84,24 +84,24 @@ shoot.Calls
 Getters:
 
 ``` c#
-var isArmed = fakeStar.StubGetter(() => fakeStar.Object.IsArmed, (bool armed) => true);
+var isArmedCalls = fakeStar.StubGetter(() => fakeStar.Object.IsArmed, (bool armed) => true);
 
 vader.GetAngry();
 
-isArmed.CallCount.ShouldBe(1);
+isArmedCalls.Count.ShouldBe(1);
 ```
 
 Setters:
 
 ``` c#
-var target = fakeStar.StubSetter(v => fakeStar.Object.Target = v, (Planet planet) => 
+var targetCalls = fakeStar.StubSetter(v => fakeStar.Object.Target = v, (Planet planet) => 
 {
     planet.Name.ShouldBe("Alderaan");
 });
 
 vader.GetAngry();
 
-target.CallCount.ShouldBe(1);
+targetCalls.Count.ShouldBe(1);
 ```
 
 
