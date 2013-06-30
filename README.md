@@ -60,7 +60,7 @@ var shootCalls = fakeStar.Stub(fakeStar.Object.Shoot, (Planet planet) =>
 });
 ```
 
-Note that you should specify the types of all arguments in the lambda expression (e.g.`(Planet planet) => ..`).
+Note that you should specify the types of all arguments in the lambda expression (e.g. `(Planet planet) => ..` and not just `planet => ..`).
 This is because C# can't figure out which overload of `Shoot` you want to stub without those parameter types
 (even when there's no overloads).
 
